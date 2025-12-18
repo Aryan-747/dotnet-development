@@ -1,0 +1,15 @@
+C:\Users\aryan\Desktop\dotnet\secondproj\bin\Debug\net10.0\secondproj.exe
+C:\Users\aryan\Desktop\dotnet\secondproj\bin\Debug\net10.0\secondproj.deps.json
+C:\Users\aryan\Desktop\dotnet\secondproj\bin\Debug\net10.0\secondproj.runtimeconfig.json
+C:\Users\aryan\Desktop\dotnet\secondproj\bin\Debug\net10.0\secondproj.dll
+C:\Users\aryan\Desktop\dotnet\secondproj\bin\Debug\net10.0\secondproj.pdb
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.AssemblyInfoInputs.cache
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.AssemblyInfo.cs
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.csproj.CoreCompileInputs.cache
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.sourcelink.json
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.dll
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\refint\secondproj.dll
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.pdb
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\secondproj.genruntimeconfig.cache
+C:\Users\aryan\Desktop\dotnet\secondproj\obj\Debug\net10.0\ref\secondproj.dll
