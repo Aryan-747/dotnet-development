@@ -5,7 +5,6 @@ using System.Xml.XPath;
 
 class Program
 {
-
     static List<int> sieve( int n)
     {
         bool[] primes = new bool[n+1];
@@ -16,7 +15,6 @@ class Program
             primes[i] = true;
         }
         
-
         // marking numbers which are not prime
 
         for(int p = 2; p*p<=n ; p++)
