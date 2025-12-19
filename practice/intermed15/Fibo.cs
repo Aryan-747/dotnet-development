@@ -37,8 +37,5 @@ public class Fibo
         {
             Console.WriteLine("Enter valid input!");
         }
-
     }
-
-
 }
