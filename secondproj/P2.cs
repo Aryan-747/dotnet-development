@@ -1,7 +1,8 @@
 using System;
 
 public class P2
-{   public static void Main()
+{
+    public static void Main()
     {
         string age;
         Console.Write("Enter age: ");
