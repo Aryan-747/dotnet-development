@@ -1,8 +1,6 @@
 using System;
 
 class Admission {
-
-
     // Function that checks if Candidate is Eligible
     public static bool IsEligible(int mathmarks, int phymarks, int chemmarks)
     {
@@ -29,7 +27,6 @@ class Admission {
     // Function to convert string input into integer
     static int ProcessInput(string input)
     {
-
         // converting string input to integer
         try
         {
@@ -49,7 +46,6 @@ class Admission {
 
     public static void Main(string[] args)
     {
-
         // Taking Math marks input
         string inp1 = GetInput("Enter Marks in Math:");
         int mathmarks = ProcessInput(inp1);
@@ -62,14 +58,7 @@ class Admission {
         string inp3 = GetInput("Enter Marks in Chemistry: ");
         int chemmarks = ProcessInput(inp3);
 
-
         // Printing result if student is eligible or not
         Console.WriteLine("The Student is Eligible: " + IsEligible(mathmarks, phymarks, chemmarks));
-
-
     }
-
-
-
-
 }

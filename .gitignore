@@ -1,2 +1,18 @@
-# Ignoring all vs files
-*.vs
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+
+# Build results
+bin/
+obj/
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
