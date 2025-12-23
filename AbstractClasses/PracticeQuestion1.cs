@@ -8,7 +8,7 @@ abstract class TaxCalc
 
 class Indian : TaxCalc
 {
-    // overriding the abstract method
+   // overriding the abstract method
    public override void DisplayMethod()
     {
         Console.WriteLine("Tax is being calculated as per Indian Tax Regime!");
