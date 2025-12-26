@@ -4,6 +4,7 @@
 *.suo
 *.cache
 *.log
+.vs/
 
 # Build results
 bin/

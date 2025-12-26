@@ -11,7 +11,6 @@ class BillCalc
         this.units = units;
     }
 
-
     // logic to calculate bill amount
     public double Calculator()
     {
