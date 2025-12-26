@@ -3,20 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\aryan\\Desktop\\dotnet\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PaymentSystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AbstractClasses\\PaymentSystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\AbstractClasses.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AbstractClasses\\AbstractClasses.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PracticeQuestion1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AbstractClasses\\PracticeQuestion1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\Abstractclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:AbstractClasses\\Abstractclass.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,53 +23,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "PaymentSystem.cs",
-              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PaymentSystem.cs",
-              "RelativeDocumentMoniker": "AbstractClasses\\PaymentSystem.cs",
-              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PaymentSystem.cs",
-              "RelativeToolTip": "AbstractClasses\\PaymentSystem.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAADEAAAAFAAAAAAAAAA==",
+              "Title": "Question7.cs",
+              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs",
+              "RelativeDocumentMoniker": "Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs",
+              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs",
+              "RelativeToolTip": "Day1\u00262Assignment\\15QuesAssignment1\\Question7.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-23T09:13:46.194Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Abstractclass.cs",
-              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\Abstractclass.cs",
-              "RelativeDocumentMoniker": "AbstractClasses\\Abstractclass.cs",
-              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\Abstractclass.cs",
-              "RelativeToolTip": "AbstractClasses\\Abstractclass.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-23T06:52:03.908Z",
+              "WhenOpened": "2025-12-24T18:07:54.069Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "AbstractClasses.csproj",
-              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\AbstractClasses.csproj",
-              "RelativeDocumentMoniker": "AbstractClasses\\AbstractClasses.csproj",
-              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\AbstractClasses.csproj",
-              "RelativeToolTip": "AbstractClasses\\AbstractClasses.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-12-23T06:51:28.775Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "PracticeQuestion1.cs",
-              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PracticeQuestion1.cs",
-              "RelativeDocumentMoniker": "AbstractClasses\\PracticeQuestion1.cs",
-              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\AbstractClasses\\PracticeQuestion1.cs",
-              "RelativeToolTip": "AbstractClasses\\PracticeQuestion1.cs",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAABQAAAApAAAAAAAAAA==",
+              "Title": "Question6.cs",
+              "DocumentMoniker": "C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs",
+              "RelativeDocumentMoniker": "Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs",
+              "ToolTip": "C:\\Users\\aryan\\Desktop\\dotnet\\Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs",
+              "RelativeToolTip": "Day1\u00262Assignment\\15QuesAssignment1\\Question6.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-23T05:55:07.499Z",
+              "WhenOpened": "2025-12-24T17:40:09.125Z",
               "EditorCaption": ""
             }
           ]

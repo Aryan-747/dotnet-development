@@ -1,6 +1,5 @@
 using System;
 
-
 // interface 2
 interface SingAbility
 {
@@ -14,8 +13,6 @@ interface DanceAbility
 {
     public void Dance();
 }
-
-
 
 // class inheriting from multiple interfaces
 class Bird : SingAbility, DanceAbility
