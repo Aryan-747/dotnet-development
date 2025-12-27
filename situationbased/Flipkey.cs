@@ -2,7 +2,6 @@ using System;
 
 class Flipkey
 {
-
     // Generating password
     public static string CleanseAndInvert(string str)
     {
@@ -70,12 +69,7 @@ class Flipkey
         // Passing input into the method for updated output and storing in new variable
         string newstring = CleanseAndInvert(input);
 
-
         // Displaying output
         Console.WriteLine("The Final Output is: " + newstring);
-
-
-
-
     }
 }
