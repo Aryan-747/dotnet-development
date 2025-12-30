@@ -18,7 +18,6 @@ public class P2
         {
             Console.WriteLine("Invalid age, Please enter a valid number");
         }
-
     }
     
 }
