@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Student xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Id>101</Id>
+  <Name>Aryan</Name>
+  <Age>21</Age>
+  <mathmarks>
+    <int>51</int>
+    <int>39</int>
+    <int>49</int>
+    <int>59</int>
+  </mathmarks>
+  <chemmarks>
+    <int>34</int>
+    <int>54</int>
+    <int>57</int>
+    <int>55</int>
+  </chemmarks>
+</Student>
