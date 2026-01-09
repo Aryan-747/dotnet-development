@@ -1,5 +1,4 @@
 using System;
-
 class Flipkey
 {
     // Generating password
