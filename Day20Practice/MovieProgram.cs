@@ -30,6 +30,22 @@ public class MovieProgram
         new Movie("Dhoom","YJR","Action",8),
     };
 
+    public static List<Movie> AddMovie(string input)
+    {
+        string[] inp = input.Split(','); // splitted input
+
+        if(inp.Count()<4)
+        {
+            Console.WriteLine("Inavlid Input!");
+            return MovieList;
+        }
+
+        Movie m1 = new Movie(inp[0],inp[1],inp[2],int.Parse(inp[3]));
+        MovieList.Add(m1);
+
+        return MovieList;
+    }
+
     // Fetching Movies By Genre & returning
     public static List<Movie> ViewMoviesByGenre(string genre)
     {
@@ -38,7 +54,7 @@ public class MovieProgram
         foreach(var item in MovieList)
         {   
             // Adding Movie Object in new List if Genre is Same
-            if(item.Genre == genre)
+            if(item.Genre.Equals(genre,StringComparison.OrdinalIgnoreCase))
             {
                 resultant.Add(item);
             }
@@ -63,8 +79,21 @@ public class MovieProgram
         }
         Console.WriteLine();
 
+        // Taking Input
+        Console.WriteLine("---Enter the details of movie you want to enter in provided format---");
+        Console.Write("Title,Artist,Genre,Rating: ");
+        string inp = Console.ReadLine();
+        MovieList = AddMovie(inp);
+        // Displaying Movie Details
+        Console.WriteLine("\n---Updated List After Movie Addition---");
+        foreach(var items in MovieList)
+        {
+            Console.WriteLine($"{items.Title},{items.Artist},{items.Genre},{items.Ratings}");
+        }
+        Console.WriteLine();
+
         // Displaying Movies With Inputted Genre
-        Console.Write("Enter the Genre: "); // genre is Case Sensetive Currently :(
+        Console.Write("Enter the Genre: ");
         string genre = Console.ReadLine();
         List<Movie> Mlist = ViewMoviesByGenre(genre);
         // None Found in Genre
