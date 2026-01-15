@@ -38,7 +38,6 @@ class Find
     }
 
     // Finding Minimum & Maximum In Sorted Dictionary
-
     public static List<string> FindMinAndMaxItems()
     {
         long MinValue = ItemList.Values.Min();
@@ -83,7 +82,6 @@ class Find
     // Main Function
     public static void Main(string[] args)
     {
-
         // Displaying Initial Dictionary
         Console.WriteLine("---Initial Dictionary---");
         foreach(var item in ItemList)

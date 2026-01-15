@@ -2,12 +2,12 @@ using System.Collections;
 class MeditationCenter
 {
     // Base Variables
-    int MemberId {get; set;}
-    int Age {get; set;}
-    double Weight{get; set;}
-    double Height{get; set;}
-    string Goal{get; set;}
-    double BMI {get; set;}
+    public int MemberId {get; set;}
+    public int Age {get; set;}
+    public double Weight{get; set;}
+    public double Height{get; set;}
+    public string Goal{get; set;}
+    public double BMI {get; set;}
 
     // Base & Parameterized Constructor
 
@@ -25,7 +25,7 @@ class MeditationCenter
 }
 class Yoga
 {
-    public List<MeditationCenter> MemberList = new List<MeditationCenter>();
+    public static List<MeditationCenter> MemberList = new List<MeditationCenter>();
 
     public void TakeInput()
     {
@@ -61,8 +61,18 @@ class Yoga
 
     public void AddYogaMember(int memberid, int age, double weight, double height, string goal, double bmi)
     {
-        List.Add(new MeditationCenter(memberid,age,weight,height,goal,bmi));
+        MemberList.Add(new MeditationCenter(memberid,age,weight,height,goal,bmi));
     }
+
+    public void DisplayList()
+    {
+        foreach(var x in MemberList)
+        {
+            Console.WriteLine($"{x.MemberId},{x.Age},{x.Weight},{x.Height},{x.Goal},{x.BMI}");
+        }
+    }
+
+
 }
 class YogaProgram
 {
@@ -72,6 +82,7 @@ class YogaProgram
         Yoga y1 = new Yoga();
         // Calling Input Function
         y1.TakeInput();
+        y1.DisplayList();
     }
 }
 
