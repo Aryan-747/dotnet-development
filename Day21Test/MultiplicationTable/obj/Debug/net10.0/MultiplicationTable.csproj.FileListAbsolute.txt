@@ -1,0 +1,15 @@
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.AssemblyInfoInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.AssemblyInfo.cs
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.csproj.CoreCompileInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.sourcelink.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\bin\Debug\net10.0\MultiplicationTable.exe
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\bin\Debug\net10.0\MultiplicationTable.deps.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\bin\Debug\net10.0\MultiplicationTable.runtimeconfig.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\bin\Debug\net10.0\MultiplicationTable.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\bin\Debug\net10.0\MultiplicationTable.pdb
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\refint\MultiplicationTable.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.pdb
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\MultiplicationTable.genruntimeconfig.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\MultiplicationTable\obj\Debug\net10.0\ref\MultiplicationTable.dll

@@ -1,0 +1,15 @@
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.AssemblyInfoInputs.cache
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.AssemblyInfo.cs
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.csproj.CoreCompileInputs.cache
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.sourcelink.json
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\bin\Debug\net10.0\AbstractClasses.exe
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\bin\Debug\net10.0\AbstractClasses.deps.json
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\bin\Debug\net10.0\AbstractClasses.runtimeconfig.json
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\bin\Debug\net10.0\AbstractClasses.dll
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\bin\Debug\net10.0\AbstractClasses.pdb
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.dll
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\refint\AbstractClasses.dll
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.pdb
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\AbstractClasses.genruntimeconfig.cache
+C:\Users\aryan\Desktop\dotnet\AbstractClasses\obj\Debug\net10.0\ref\AbstractClasses.dll

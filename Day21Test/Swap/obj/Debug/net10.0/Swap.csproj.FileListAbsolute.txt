@@ -1,0 +1,15 @@
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.AssemblyInfoInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.AssemblyInfo.cs
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.csproj.CoreCompileInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.sourcelink.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\bin\Debug\net10.0\Swap.exe
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\bin\Debug\net10.0\Swap.deps.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\bin\Debug\net10.0\Swap.runtimeconfig.json
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\bin\Debug\net10.0\Swap.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\bin\Debug\net10.0\Swap.pdb
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\refint\Swap.dll
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.pdb
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\Swap.genruntimeconfig.cache
+C:\Users\aryan\Desktop\dotnet\Day21Test\Swap\obj\Debug\net10.0\ref\Swap.dll
