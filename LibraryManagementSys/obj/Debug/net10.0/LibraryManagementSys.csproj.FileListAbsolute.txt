@@ -1,5 +1,0 @@
-C:\Users\aryan\Desktop\dotnet\LibraryManagementSys\obj\Debug\net10.0\LibraryManagementSys.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\aryan\Desktop\dotnet\LibraryManagementSys\obj\Debug\net10.0\LibraryManagementSys.AssemblyInfoInputs.cache
-C:\Users\aryan\Desktop\dotnet\LibraryManagementSys\obj\Debug\net10.0\LibraryManagementSys.AssemblyInfo.cs
-C:\Users\aryan\Desktop\dotnet\LibraryManagementSys\obj\Debug\net10.0\LibraryManagementSys.csproj.CoreCompileInputs.cache
-C:\Users\aryan\Desktop\dotnet\LibraryManagementSys\obj\Debug\net10.0\LibraryManagementSys.sourcelink.json

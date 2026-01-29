@@ -1,1 +1,19 @@
+# Ignoring crucial files
+*.vs/
 *.vs
+.vs/
+*.log
+*.user
+*.cache
+
+# Build results
+bin/
+obj/
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# OS files
+Thumbs.db
+.DS_Store
