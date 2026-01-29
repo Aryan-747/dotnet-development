@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Day1&2Assignment",
-    "\\Day1&2Assignment\\15QuesAssignment2"
+    "\\Day1&2Assignment\\15QuesAssignment2",
+    "\\Day29PracticeQues",
+    "\\Day29PracticeQues\\Collections",
+    "\\Day29PracticeQues\\Collections\\ForensicReport"
   ],
+  "SelectedNode": "\\Day29PracticeQues\\Collections\\ForensicReport\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

@@ -1,7 +1,6 @@
 ﻿using System;
-
 // Base class
-class Foresensic
+class Forensic
 {
     // Dictionary to store data
     private List<KeyValuePair<string, DateOnly>> reportMap = new List<KeyValuePair<string, DateOnly>>();
@@ -42,11 +41,10 @@ class Program
 
         Console.WriteLine("Enter details: ");
 
-        Foresensic obj = new Foresensic();
+        Forensic obj = new Forensic();
 
         for(int i=0; i<n; i++)
         {
-
             string inp;
             inp = Console.ReadLine();
 
