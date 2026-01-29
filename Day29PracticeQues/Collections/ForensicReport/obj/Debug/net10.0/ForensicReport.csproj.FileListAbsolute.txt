@@ -1,0 +1,15 @@
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\bin\Debug\net10.0\ForensicReport.exe
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\bin\Debug\net10.0\ForensicReport.deps.json
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\bin\Debug\net10.0\ForensicReport.runtimeconfig.json
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\bin\Debug\net10.0\ForensicReport.dll
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\bin\Debug\net10.0\ForensicReport.pdb
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.AssemblyInfoInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.AssemblyInfo.cs
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.csproj.CoreCompileInputs.cache
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.sourcelink.json
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.dll
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\refint\ForensicReport.dll
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.pdb
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ForensicReport.genruntimeconfig.cache
+C:\Users\aryan\Desktop\dotnet\Day29PracticeQues\Collections\ForensicReport\obj\Debug\net10.0\ref\ForensicReport.dll
