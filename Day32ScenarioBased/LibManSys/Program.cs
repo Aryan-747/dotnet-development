@@ -56,11 +56,17 @@ class LibraryUtility
 
             if(ByGenre.ContainsKey(genre))
             {
-                ByGenre.Add()
+                ByGenre[genre].Add(x);
+            }
+
+            else
+            {
+                List<Book> b1 = new List<Book>();
+                b1.Add(x);
+                ByGenre.Add(genre, b1);
             }
         }
-
-
+        return ByGenre;
     }
 
     // Method 4: Display Book Details
