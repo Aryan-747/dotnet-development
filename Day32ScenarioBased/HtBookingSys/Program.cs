@@ -29,7 +29,6 @@ class HotelManager
         if(RoomList.ContainsKey(roomnumber))
         {
             Console.WriteLine("Room Already Exists!");
-            return;
         }
 
     }
