@@ -6,7 +6,7 @@ class Flipkey
     {
         str = str.ToLower();
 
-        string outputstring = "";
+        string outputstring = ""; // Stores Output
 
         if(str.Length<6)
         {
