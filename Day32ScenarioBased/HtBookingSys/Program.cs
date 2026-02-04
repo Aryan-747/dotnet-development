@@ -72,13 +72,14 @@ class HotelManager
                         x.Value.isAvailable = false; // Room Booked
                         TotalCost = CalculateTotal(roomnumber,nights); // calculates totalcost
                         Console.WriteLine($"Room: {roomnumber} Booked Successfully");
+                        Console.WriteLine($"Total Cost of Stay: {TotalCost}");
                         return true;
                     }
 
                     else
                     {
                         Console.WriteLine("Room is Already Booked!");
-                        return false;
+                        return true;
                     }
             }
         }
@@ -134,7 +135,100 @@ class Program
     {
         HotelManager manager = new HotelManager();
 
+        // Handling User Input
+
+        int choice;
+
+        Console.WriteLine("---------- Hotel Booking System ----------");
+
+        while(true)
+        {
+            Console.WriteLine("\n1. Add Room\n2. Book Room\n3. List Rooms By Type\n4. List Rooms in Budget\n0. Exit\n");
+            Console.Write("Enter Choice: ");
+            choice = int.Parse(Console.ReadLine());
+            switch (choice)
+            {   
+                // Add Room
+                case 1:
+                int roomnumber;
+                string type;
+                double price;
+                Console.Write("Enter Room Number: ");
+                roomnumber = int.Parse(Console.ReadLine());
+                Console.Write("Enter Room Type: ");
+                type = Console.ReadLine();
+                Console.Write("Enter Price Per Night: ");
+                price = int.Parse(Console.ReadLine());
+
+                manager.AddRoom(roomnumber,type,price);
+                break;
+
+                // Book room
+                case 2:
+                int roomnumbertobook;
+                int numberofnights;
+                Console.Write("Enter Room Number To Be Booked: ");
+                roomnumbertobook = int.Parse(Console.ReadLine());
+                Console.Write("Enter number of Nights: ");
+                numberofnights = int.Parse(Console.ReadLine());
+
+                bool check = manager.BookRoom(roomnumbertobook,numberofnights);
+                if(!check)
+                    {
+                        Console.WriteLine("Room Does Not Exist!");
+                    }
+                break;
+            
+
+                // Display Rooms By Type
+                case 3:
+
+                Console.WriteLine("-------Rooms Grouped By Type-------");
+                Dictionary<string,List<Room>> r1 = manager.GroupRoomsByType();
+
+                foreach(var x in r1)
+                {
+                    Console.WriteLine($"Room Type: {x.Key}");
+                    foreach(Room room in x.Value)
+                    {
+                        Console.WriteLine($"Room: {room.RoomNumber}, Type: {room.RoomType}, PricePerNight: {room.PricePerNight}, IsAvailable: {room.isAvailable}");
+                    }
+                    Console.WriteLine();
+                }
+                break;
+
+                // Find Rooms in Budget
+                case 4:
+
+                int min;
+                int max;
+                Console.Write("Enter minimum budget: ");
+                min = int.Parse(Console.ReadLine());
+
+                Console.Write("Enter maximum budget: ");
+                max = int.Parse(Console.ReadLine());
+
+                List<Room> res = manager.GetAvailableRoomsByPriceRange(min,max);
+                foreach(Room x in res)
+                 {
+                    Console.WriteLine($"Room: {x.RoomNumber} | Type: {x.RoomType} | PricePerNight: {x.PricePerNight} | IsAvailable: {x.isAvailable}");
+                 }
+                break;
+
+                case 0:
+                Console.WriteLine("Program Exited Successfully!");
+                return;
+                break;
+
+                default:
+                Console.WriteLine("Invalid Choice!");
+                break;
+            }
+            
+        }
+
         // Hardcoded data for testing
+        /*
         manager.AddRoom(101,"Single",100);
         manager.AddRoom(150,"Double",150);
         manager.AddRoom(300,"Suite",500);
@@ -146,26 +240,7 @@ class Program
         Console.WriteLine($"Total Cost of Stay: {manager.TotalCost}");
         manager.BookRoom(350,5);
         Console.WriteLine($"Total Cost of Stay: {manager.TotalCost}");
-
-        Console.WriteLine("Room in Price Range of 100 to 500");
-        List<Room> res = manager.GetAvailableRoomsByPriceRange(200,700);
-        foreach(Room x in res)
-        {
-            Console.WriteLine($"Room: {x.RoomNumber} | Type: {x.RoomType} | PricePerNight: {x.PricePerNight} | IsAvailable: {x.isAvailable}");
-        }
-
-        Console.WriteLine("-------Rooms Grouped By Type-------");
-        Dictionary<string,List<Room>> r1 = manager.GroupRoomsByType();
-
-        foreach(var x in r1)
-        {
-            Console.WriteLine($"Room Type: {x.Key}");
-            foreach(Room room in x.Value)
-            {
-                Console.WriteLine($"Room: {room.RoomNumber}, Type: {room.RoomType}, PricePerNight: {room.PricePerNight}, IsAvailable: {room.isAvailable}");
-            }
-            Console.WriteLine();
-        }
+        */
     }
 
 }
