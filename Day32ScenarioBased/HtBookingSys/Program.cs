@@ -139,10 +139,9 @@ class Program
 
         int choice;
 
-        Console.WriteLine("---------- Hotel Booking System ----------");
-
         while(true)
         {
+            Console.WriteLine("---------- Hotel Booking System ----------");
             Console.WriteLine("\n1. Add Room\n2. Book Room\n3. List Rooms By Type\n4. List Rooms in Budget\n0. Exit\n");
             Console.Write("Enter Choice: ");
             choice = int.Parse(Console.ReadLine());
