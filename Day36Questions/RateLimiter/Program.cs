@@ -7,8 +7,7 @@ public class SlidingWindowRateLimiter
     private readonly TimeSpan windowSize = TimeSpan.FromSeconds(10);
 
     // clientId -> timestamps of requests
-    private readonly Dictionary<string, Queue<DateTime>> requestLog
-        = new Dictionary<string, Queue<DateTime>>();
+    private readonly Dictionary<string, Queue<DateTime>> requestLog = new Dictionary<string, Queue<DateTime>>();
 
     private readonly object lockObj = new object();
 
