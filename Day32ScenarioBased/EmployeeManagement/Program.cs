@@ -23,5 +23,13 @@
                 Console.WriteLine($"Id: {emp.Id}, Name: {emp.Name}, Department: {emp.Department}, Salary: {emp.Salary}, JoiningDate: {emp.JoiningDate}");
             }
         }
+
+        // Displaying Department Salary
+        foreach(KeyValuePair<string,List<Employee>>dept in res)
+        {
+            double salary = manager.calculateDepartmentSalary(dept.Key);
+            Console.WriteLine($"Total Salary of {dept.Key} Department is: {salary}");
+        }
+
     }
 }

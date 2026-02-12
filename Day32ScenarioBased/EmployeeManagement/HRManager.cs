@@ -1,3 +1,5 @@
+using System.Reflection.Metadata.Ecma335;
+
 class HRManager
 {
     // Dict to Store Data
@@ -40,5 +42,21 @@ class HRManager
         
     }
 
-    
+    // Calculating Department Salary
+    public double calculateDepartmentSalary(string department)
+    {
+        double deptsalary = 0;
+
+        foreach(var x in EmployeeList)
+        {
+            if(x.Value.Department == department)
+            {
+                deptsalary += x.Value.Salary;
+            }
+        }
+        return deptsalary;
+    }
+
+    //
+
 }
