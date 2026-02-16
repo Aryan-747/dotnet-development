@@ -1,0 +1,6 @@
+﻿Build started at 11:22...
+1>------ Build started: Project: EcomSeg, Configuration: Debug Any CPU ------
+1>  Skipping analyzers to speed up the build. You can execute 'Build' or 'Rebuild' command to run analyzers.
+1>  EcomSeg -> C:\Users\aryan\Desktop\dotnet\Day41Collections\EcomSeg\bin\Debug\net10.0\EcomSeg.dll
+========== Build: 1 succeeded, 0 failed, 0 up-to-date, 0 skipped ==========
+========== Build completed at 11:22 and took 03.689 seconds ==========

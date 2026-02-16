@@ -1,6 +1,5 @@
 ﻿class Program
 {
-
     public static Dictionary<string,int> Consolidation(List<KeyValuePair<string,int>> itemList)
     {
         Dictionary<string, int> result = new Dictionary<string, int>();
@@ -28,7 +27,6 @@
 
         return result;
     }
-
     public static void Main(string[] args)
     {
         List<KeyValuePair<string,int>> ItemList = new List<KeyValuePair<string,int>>();
