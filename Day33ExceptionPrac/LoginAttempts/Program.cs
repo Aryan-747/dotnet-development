@@ -7,8 +7,6 @@ class LoginException : Exception
         
     }
 }
-
-
 class Program
 {
     static void Main()
