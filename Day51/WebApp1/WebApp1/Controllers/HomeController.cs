@@ -14,7 +14,7 @@ namespace WebApp1.Controllers
 
             return View(itemList);
         }
-
+            
         public IActionResult Privacy()
         {
             return View();
