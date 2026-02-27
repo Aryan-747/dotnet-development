@@ -1,0 +1,9 @@
+<input type="number" id="age">
+<button onclick="checkAge()" style="background-color: cyan;">Check</button>
+<p id="result"></p>
+<script>
+function checkAge(){
+var age=document.getElementById("age").value;
+result.innerHTML = age>=18 && age<=99 ? "Eligible" : "Not eligible";
+}
+</script>

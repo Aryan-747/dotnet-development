@@ -1,0 +1,14 @@
+<input type="checkbox" name="h" value="Reading">Reading
+<input type="checkbox" name="h" value="Sports">Sports
+<button onclick="show()">Show</button>
+<p id="r"></p>
+<script>
+function show(){
+var c=document.getElementsByName("h");
+var s="";
+for(var i=0;i<c.length;i++){
+if(c[i].checked) s+=c[i].value+" ";
+}
+r.innerHTML=s;
+}
+</script>

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h2>Page 2</h2>
+    <p id="result"></p>
+    <script>
+      // parse query string
+      var urlParams = new URLSearchParams(window.location.search);
+
+      // get name and city from query string
+      var name = urlParams.get("name");
+      var city = urlParams.get("city");
+
+      // display name and city
+      document.getElementById("result").innerHTML =
+        "Name: " + name + "<br>City: " + city;
+    </script>
+  </body>
+</html>
