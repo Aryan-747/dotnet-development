@@ -1,0 +1,83 @@
+﻿@model IEnumerable<object>
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<h2>Search Results</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <h4>No results found.</h4>
+}
+else
+{
+    var firstItem = Model.First();
+
+    <!-- ================= FLIGHT ONLY ================= -->
+    if (firstItem is FlightResult)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>FlightId</th>
+                    <th>Flight Name</th>
+                    <th>Flight Type</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (FlightResult item in Model)
+                {
+                    <tr>
+                        <td>@item.FlightId</td>
+                        <td>@item.FlightName</td>
+                        <td>@item.FlightType</td>
+                        <td>@item.Source</td>
+                        <td>@item.Destination</td>
+                        <td>@item.TotalCost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    else if (firstItem is FlightHotelResult)
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>FlightId</th>
+                    <th>Flight Name</th>
+                    <th>Source</th>
+                    <th>Destination</th>
+                    <th>Hotel Name</th>
+                    <th>Total Cost</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (FlightHotelResult item in Model)
+                {
+                    <tr>
+                        <td>@item.FlightId</td>
+                        <td>@item.FlightName</td>
+                        <td>@item.Source</td>
+                        <td>@item.Destination</td>
+                        <td>@item.HotelName</td>
+                        <td>@item.TotalCost</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+
+<br />
+
+<a asp-action="Index" class="btn btn-primary">
+    Back to Search
+</a>

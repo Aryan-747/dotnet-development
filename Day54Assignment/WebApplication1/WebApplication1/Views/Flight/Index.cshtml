@@ -1,0 +1,28 @@
+﻿@model SearchViewModel
+
+<form asp-controller="Flight" method="post">
+    @Html.AntiForgeryToken()
+
+    <label>Source</label>
+    <select asp-for="Source" asp-items="Model.SourceList" class="form-control">
+        <option value="">-- Select Source --</option>
+    </select>
+
+    <label>Destination</label>
+    <select asp-for="Destination" asp-items="Model.DestinationList" class="form-control">
+        <option value="">-- Select Destination --</option>
+    </select>
+
+    <label>Persons</label>
+    <input asp-for="NumberOfPersons" type="number" class="form-control" />
+
+    <br />
+
+    <button asp-action="SearchFlights" class="btn btn-success">
+        Flights Only
+    </button>
+
+    <button asp-action="SearchFlightsWithHotels" class="btn btn-warning">
+        Flights + Hotel
+    </button>
+</form>
