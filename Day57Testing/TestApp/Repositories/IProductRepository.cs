@@ -1,0 +1,12 @@
+using ConsoleApp.Models;
+using System.Collections.Generic;
+
+namespace ConsoleApp.Repositories
+{
+    public interface IProductRepository
+    {
+        IEnumerable<Product> GetAll();
+        Product GetById(int id);
+        void Add(Product product);
+    }
+}
