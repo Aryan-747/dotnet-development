@@ -1,5 +1,5 @@
-﻿using ConsoleApp.Models;
-using ConsoleApp.Repositories;
+﻿using TestApp.Models;
+using TestApp.Repositories;
 using System;
 
 class Program

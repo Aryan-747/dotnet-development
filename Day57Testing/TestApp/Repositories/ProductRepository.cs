@@ -1,8 +1,8 @@
-using ConsoleApp.Models;
+using TestApp.Models;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConsoleApp.Repositories
+namespace TestApp.Repositories
 {
     public class ProductRepository : IProductRepository
     {
@@ -13,7 +13,7 @@ namespace ConsoleApp.Repositories
             return _products;
         }
 
-        public Product GetById(int id)
+        public Product GetProductById(int id)
         {
             return _products.FirstOrDefault(p => p.Id == id);
         }

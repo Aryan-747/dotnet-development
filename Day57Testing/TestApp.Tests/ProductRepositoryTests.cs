@@ -1,39 +1,30 @@
-using ConsoleApp.Models;
-using ConsoleApp.Repositories;
+using Moq;
+using TestApp.Models;
+using TestApp.Repositories;
 using Xunit;
 
-namespace ConsoleApp.Tests
+public class ProductServiceTests
 {
-    public class ProductRepositoryTests
+    [Fact]
+    public void GetProductName_ShouldReturnProductName()
     {
-        [Fact]
-        public void Add_Product_ShouldIncreaseCount()
-        {
-            // Arrange
-            var repo = new ProductRepository();
-            var product = new Product { Id = 1, Name = "Laptop", Price = 80000 };
+        // Arrange
+        var mockRepo = new Mock<IProductRepository>();
 
-            // Act
-            repo.Add(product);
-            var result = repo.GetAll();
+        mockRepo.Setup(repo => repo.GetProductById(1))
+                .Returns(new Product
+                {
+                    Id = 1,
+                    Name = "Laptop",
+                    Price = 80000
+                });
 
-            // Assert
-            Assert.Single(result);
-        }
+        var service = new ProductService(mockRepo.Object);
 
-        [Fact]
-        public void GetById_ShouldReturnCorrectProduct()
-        {
-            // Arrange
-            var repo = new ProductRepository();
-            repo.Add(new Product { Id = 1, Name = "Laptop", Price = 80000 });
+        // Act
+        var result = service.GetProductName(1);
 
-            // Act
-            var product = repo.GetById(1);
-
-            // Assert
-            Assert.NotNull(product);
-            Assert.Equal("Laptop", product.Name);
-        }
+        // Assert
+        Assert.Equal("Laptop", result);
     }
 }
