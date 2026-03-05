@@ -1,12 +1,12 @@
-using ConsoleApp.Models;
+using TestApp.Models;
 using System.Collections.Generic;
 
-namespace ConsoleApp.Repositories
+namespace TestApp.Repositories
 {
     public interface IProductRepository
     {
         IEnumerable<Product> GetAll();
-        Product GetById(int id);
         void Add(Product product);
+        Product GetProductById(int id);
     }
 }

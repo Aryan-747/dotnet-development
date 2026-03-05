@@ -1,4 +1,4 @@
-namespace ConsoleApp.Models
+namespace TestApp.Models
 {
     public class Product
     {
