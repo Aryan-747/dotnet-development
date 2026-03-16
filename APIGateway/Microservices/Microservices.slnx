@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/" />
+  <Project Path="APIGateway/APIGateway.csproj" Id="a6a381c8-be57-45a3-9b1a-527df9912bca" />
+  <Project Path="CartAPI/CartAPI.csproj" />
+  <Project Path="CatalogAPI/CatalogAPI.csproj" />
+  <Project Path="NotificationAPI/NotificationAPI.csproj" />
+  <Project Path="PaymentAPI/PaymentAPI.csproj" />
+</Solution>
