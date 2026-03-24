@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReportingService.Data;
 
 namespace ReportingService.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/reports")]
     public class ReportsController : ControllerBase

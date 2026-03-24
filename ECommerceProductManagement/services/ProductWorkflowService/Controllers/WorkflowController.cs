@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProductWorkflowService.Data;
 using ProductWorkflowService.Models;
 
 namespace ProductWorkflowService.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/workflow")]
     public class WorkflowController : ControllerBase
