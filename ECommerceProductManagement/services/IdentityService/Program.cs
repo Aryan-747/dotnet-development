@@ -23,7 +23,7 @@ builder.Services.AddDbContext<IdentityDbContext>(options =>
 builder.Services.AddScoped<TokenService>();
 
 // 🔹 JWT Authentication
-var key = Encoding.UTF8.GetBytes("SUPER_SECRET_KEY_123");
+var key = Encoding.UTF8.GetBytes("THIS_IS_A_SUPER_SECRET_KEY_123456789");
 
 builder.Services.AddAuthentication(options =>
 {

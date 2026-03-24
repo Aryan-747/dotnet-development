@@ -1,17 +1,54 @@
 using CatalogService.Data;
 using CatalogService.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
+var key = Encoding.UTF8.GetBytes("THIS_IS_A_SUPER_SECRET_KEY_123456789");
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+builder.Services.AddAuthorization();
+
+// ✅ Add services
 builder.Services.AddControllers();
 
+// ✅ Swagger (MUST HAVE)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// ✅ DbContext
 builder.Services.AddDbContext<CatalogDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// ✅ Repository
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
+
+// ✅ Swagger middleware
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
