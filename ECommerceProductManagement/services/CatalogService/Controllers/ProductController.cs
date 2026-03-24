@@ -2,7 +2,9 @@
 using CatalogService.DTOs;
 using CatalogService.Models;
 using CatalogService.Repositories;
+using Microsoft.AspNetCore.Authorization;
 
+[Authorize]
 [ApiController]
 [Route("api/products")]
 public class ProductController : ControllerBase
