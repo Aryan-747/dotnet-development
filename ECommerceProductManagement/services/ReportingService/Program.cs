@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ReportingService.Data;
+using ReportingService.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ReportingDbContext>();
+    ReportingSeedService.Seed(dbContext);
+}
+
 app.UseCors("AllowFrontend");
 
 if (app.Environment.IsDevelopment())
@@ -56,6 +63,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

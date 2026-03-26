@@ -7,5 +7,6 @@
 
         public decimal MRP { get; set; }
         public decimal SellingPrice { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

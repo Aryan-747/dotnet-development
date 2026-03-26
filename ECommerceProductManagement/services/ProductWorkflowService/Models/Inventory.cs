@@ -6,5 +6,7 @@
         public Guid ProductId { get; set; }
 
         public int Quantity { get; set; }
+        public string AvailabilityMessage { get; set; } = string.Empty;
+        public DateTime UpdatedAt { get; set; }
     }
 }
