@@ -3,7 +3,7 @@
     {
       "DownstreamPathTemplate": "/api/auth/{everything}",
       "UpstreamPathTemplate": "/gateway/auth/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -14,7 +14,7 @@
     {
       "DownstreamPathTemplate": "/api/products",
       "UpstreamPathTemplate": "/gateway/catalog/products",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -25,7 +25,7 @@
     {
       "DownstreamPathTemplate": "/api/workflow/{everything}",
       "UpstreamPathTemplate": "/gateway/workflow/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
@@ -36,7 +36,7 @@
     {
       "DownstreamPathTemplate": "/api/reports/{everything}",
       "UpstreamPathTemplate": "/gateway/admin/{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
