@@ -60,6 +60,12 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
+    IdentitySeedService.Seed(dbContext);
+}
+
 app.UseCors("AllowFrontend");
 
 // 🔹 Middleware pipeline

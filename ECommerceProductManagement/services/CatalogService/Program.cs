@@ -1,5 +1,6 @@
 using CatalogService.Data;
 using CatalogService.Repositories;
+using CatalogService.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -49,6 +50,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
+    CatalogSeedService.Seed(dbContext);
+}
+
 app.UseCors("AllowFrontend");
 
 

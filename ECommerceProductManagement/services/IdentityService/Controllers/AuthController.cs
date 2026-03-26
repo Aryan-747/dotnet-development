@@ -1,13 +1,18 @@
-﻿using DTOs;
+using DTOs;
 using IdentityService.Data;
+using IdentityService.DTOs;
 using IdentityService.Models;
-using Microsoft.AspNetCore.Mvc;
 using IdentityService.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 [ApiController]
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
+    private static readonly string[] AllowedRoles = ["Admin", "ProductManager", "ContentExecutive"];
+
     private readonly IdentityDbContext _context;
     private readonly TokenService _tokenService;
 
@@ -20,18 +25,38 @@ public class AuthController : ControllerBase
     [HttpPost("signup")]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Name) ||
+            string.IsNullOrWhiteSpace(dto.Email) ||
+            string.IsNullOrWhiteSpace(dto.Password) ||
+            string.IsNullOrWhiteSpace(dto.Role))
+        {
+            return BadRequest("All fields are required.");
+        }
+
+        if (!AllowedRoles.Contains(dto.Role))
+        {
+            return BadRequest("Invalid role selected.");
+        }
+
+        if (_context.Users.Any(x => x.Email == dto.Email))
+        {
+            return Conflict("Email is already registered.");
+        }
+
         var user = new User
         {
             Id = Guid.NewGuid(),
+            Name = dto.Name,
             Email = dto.Email,
-            PasswordHash = dto.Password, // later hash
-            Role = dto.Role
+            PasswordHash = dto.Password,
+            Role = dto.Role,
+            CreatedAt = DateTime.UtcNow
         };
 
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        return Ok(user);
+        return Ok(ToProfile(user));
     }
 
     [HttpPost("login")]
@@ -41,10 +66,35 @@ public class AuthController : ControllerBase
             .FirstOrDefault(x => x.Email == dto.Email && x.PasswordHash == dto.Password);
 
         if (user == null)
+        {
             return Unauthorized();
+        }
 
-        var token = _tokenService.CreateToken(user);
+        return Ok(new AuthResponseDto
+        {
+            Token = _tokenService.CreateToken(user),
+            User = ToProfile(user)
+        });
+    }
 
-        return Ok(token);
+    [Authorize]
+    [HttpGet("me")]
+    public IActionResult Me()
+    {
+        var email = User.FindFirstValue(ClaimTypes.Email);
+        var user = _context.Users.FirstOrDefault(x => x.Email == email);
+
+        return user == null ? NotFound() : Ok(ToProfile(user));
+    }
+
+    private static UserProfileDto ToProfile(User user)
+    {
+        return new UserProfileDto
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email,
+            Role = user.Role
+        };
     }
 }

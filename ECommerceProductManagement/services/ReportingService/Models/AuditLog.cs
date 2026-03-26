@@ -5,7 +5,10 @@
         public Guid Id { get; set; }
 
         public Guid ProductId { get; set; }
-        public string Action { get; set; }
+        public string Action { get; set; } = string.Empty;
+        public string ActorEmail { get; set; } = string.Empty;
+        public string EntityName { get; set; } = string.Empty;
+        public string Details { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; }
     }
