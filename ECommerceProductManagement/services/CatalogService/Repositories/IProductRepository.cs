@@ -1,7 +1,6 @@
 ﻿using CatalogService.Models;
 
 namespace CatalogService.Repositories;
-
 public interface IProductRepository
 {
     Task<List<Product>> GetAll();

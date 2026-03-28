@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider } from "./auth/AuthContext";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CartPreview from "./pages/CartPreview";
@@ -40,6 +41,7 @@ function App() {
             <Route path="/admin/reports" element={<Reports />} />
           </Route>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </AuthProvider>
   );
