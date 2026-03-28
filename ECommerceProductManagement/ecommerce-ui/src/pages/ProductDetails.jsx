@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../auth/useAuth";
+import { addCartItem } from "../hooks/useCart";
 import api from "../services/api";
 
 const steps = ["Basic", "Media", "Pricing", "Inventory", "Review", "Publish"];
@@ -126,13 +127,12 @@ function ProductDetails({ mode = "admin" }) {
   };
 
   const addToCart = async () => {
-    const current = JSON.parse(localStorage.getItem("preview-cart") || "[]");
-    localStorage.setItem("preview-cart", JSON.stringify([...current, product]));
+    addCartItem(product);
     setMessage("Added to preview cart.");
   };
 
   return (
-    <div className="page page-spacious">
+    <div className={mode === "customer" ? "marketplace-page" : "page page-spacious"}>
       <div className="section-header">
         <div>
           <p className="eyebrow">
@@ -150,33 +150,75 @@ function ProductDetails({ mode = "admin" }) {
 
       {message ? <p className="banner success">{message}</p> : null}
 
-      <div className="split-grid">
-        <section className="card media-card">
+      <div className={mode === "customer" ? "product-detail-shell" : "split-grid"}>
+        <section className={mode === "customer" ? "card media-card customer-gallery" : "card media-card"}>
           <img alt={product.name} className="detail-image" src={form.primaryImageUrl} />
-          <p className="price-large">Rs. {form.sellingPrice}</p>
-          <p>{form.description}</p>
-          {mode === "customer" ? (
-            <button onClick={addToCart} type="button">
-              Add to preview cart
-            </button>
-          ) : null}
+          {mode === "customer" ? <p className="muted">Roll over the image area mentally as a customer would in a storefront PDP.</p> : null}
         </section>
 
-        <section className="card">
-          <div className="wizard-steps">
-            {steps.map((label, index) => (
-              <button
-                className={index === step ? "step-chip active" : "step-chip"}
-                key={label}
-                onClick={() => setStep(index)}
-                type="button"
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+        <section className={mode === "customer" ? "card customer-copy-card" : "card"}>
+          {mode === "customer" ? (
+            <>
+              <div className="customer-buy-box">
+                <p className="muted">Brand: {product.brand}</p>
+                <h2>{product.name}</h2>
+                <div className="rating-row">
+                  <span className="rating-score">4.4</span>
+                  <span className="rating-stars">★★★★★</span>
+                  <span className="muted">1,248 ratings</span>
+                </div>
+                <p className="price-large">
+                  Rs. {Number(form.sellingPrice || 0).toLocaleString("en-IN")}
+                </p>
+                <p className={product.stockQuantity > 0 ? "stock-good" : "stock-low"}>
+                  {product.stockQuantity > 0 ? "In Stock" : "Out of Stock"}
+                </p>
+                <p>{form.description}</p>
+                <div className="buy-box-actions">
+                  <button onClick={addToCart} type="button">
+                    Add to preview cart
+                  </button>
+                  <button className="ghost-link" type="button">
+                    Buy now preview
+                  </button>
+                </div>
+              </div>
 
-          <div className="form-grid">
+              <div className="detail-specs">
+                <div>
+                  <strong>Category</strong>
+                  <p>{product.categoryName}</p>
+                </div>
+                <div>
+                  <strong>SKU</strong>
+                  <p>{product.sku}</p>
+                </div>
+                <div>
+                  <strong>Tags</strong>
+                  <p>{product.tags}</p>
+                </div>
+                <div>
+                  <strong>Availability</strong>
+                  <p>{product.stockQuantity > 0 ? `${product.stockQuantity} left` : "Unavailable"}</p>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="wizard-steps">
+                {steps.map((label, index) => (
+                  <button
+                    className={index === step ? "step-chip active" : "step-chip"}
+                    key={label}
+                    onClick={() => setStep(index)}
+                    type="button"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+
+              <div className="form-grid">
             <label>
               Name
               <input
@@ -269,42 +311,42 @@ function ProductDetails({ mode = "admin" }) {
                 }
               />
             </label>
-          </div>
+              </div>
 
-          {mode === "admin" ? (
-            <div className="action-row">
-              <button onClick={saveProduct} type="button">
-                Save basic details
-              </button>
-              <button onClick={savePricing} type="button">
-                Save pricing
-              </button>
-              <button onClick={saveInventory} type="button">
-                Save inventory
-              </button>
-              {user?.role !== "ContentExecutive" ? (
-                <button onClick={submitForReview} type="button">
-                  Submit for review
+              <div className="action-row">
+                <button onClick={saveProduct} type="button">
+                  Save basic details
                 </button>
-              ) : null}
-              {user?.role === "Admin" ? (
-                <>
-                  <button onClick={() => reviewAction("approve", "Approved", "Approved")} type="button">
-                    Approve
+                <button onClick={savePricing} type="button">
+                  Save pricing
+                </button>
+                <button onClick={saveInventory} type="button">
+                  Save inventory
+                </button>
+                {user?.role !== "ContentExecutive" ? (
+                  <button onClick={submitForReview} type="button">
+                    Submit for review
                   </button>
-                  <button onClick={() => reviewAction("reject", "Rejected", "Rejected")} type="button">
-                    Reject
-                  </button>
-                  <button
-                    onClick={() => reviewAction("publish", "Published", "Published")}
-                    type="button"
-                  >
-                    Publish
-                  </button>
-                </>
-              ) : null}
-            </div>
-          ) : null}
+                ) : null}
+                {user?.role === "Admin" ? (
+                  <>
+                    <button onClick={() => reviewAction("approve", "Approved", "Approved")} type="button">
+                      Approve
+                    </button>
+                    <button onClick={() => reviewAction("reject", "Rejected", "Rejected")} type="button">
+                      Reject
+                    </button>
+                    <button
+                      onClick={() => reviewAction("publish", "Published", "Published")}
+                      type="button"
+                    >
+                      Publish
+                    </button>
+                  </>
+                ) : null}
+              </div>
+            </>
+          )}
         </section>
       </div>
 

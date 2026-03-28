@@ -30,19 +30,12 @@ function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
-        <div className="auth-copy">
-          <p className="eyebrow">Secure JWT Access</p>
-          <h1>Sign in to the product management portal</h1>
+              <div className="auth-copy">
+                  <h1 style={{ color: 'white'}}>Sign In To The Product Management Portal</h1>
           <p>
             Use the seeded users or your own signup account to manage catalog, workflow,
             and reporting features.
           </p>
-          <div className="card subtle-card">
-            <p>Demo accounts:</p>
-            <p>`admin@ecommerce.local` / `Admin@123`</p>
-            <p>`pm@ecommerce.local` / `Product@123`</p>
-            <p>`content@ecommerce.local` / `Content@123`</p>
-          </div>
         </div>
 
         <form className="auth-form" onSubmit={onSubmit}>
