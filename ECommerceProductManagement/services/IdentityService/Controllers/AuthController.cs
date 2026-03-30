@@ -1,4 +1,5 @@
 using DTOs;
+using Google.Apis.Auth;
 using IdentityService.Data;
 using IdentityService.DTOs;
 using IdentityService.Models;
@@ -15,11 +16,16 @@ public class AuthController : ControllerBase
 
     private readonly IdentityDbContext _context;
     private readonly TokenService _tokenService;
+    private readonly IConfiguration _configuration;
 
-    public AuthController(IdentityDbContext context, TokenService tokenService)
+    public AuthController(
+        IdentityDbContext context,
+        TokenService tokenService,
+        IConfiguration configuration)
     {
         _context = context;
         _tokenService = tokenService;
+        _configuration = configuration;
     }
 
     [HttpPost("signup")]
@@ -50,7 +56,8 @@ public class AuthController : ControllerBase
             Email = dto.Email,
             PasswordHash = dto.Password,
             Role = dto.Role,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            AuthProvider = "Local"
         };
 
         _context.Users.Add(user);
@@ -68,6 +75,105 @@ public class AuthController : ControllerBase
         if (user == null)
         {
             return Unauthorized();
+        }
+
+        return Ok(new AuthResponseDto
+        {
+            Token = _tokenService.CreateToken(user),
+            User = ToProfile(user)
+        });
+    }
+
+    [HttpPost("google")]
+    public async Task<IActionResult> GoogleLogin(GoogleLoginDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.IdToken))
+        {
+            return BadRequest("Google ID token is required.");
+        }
+
+        var clientId = _configuration["GoogleAuth:ClientId"];
+        var defaultRole = _configuration["GoogleAuth:DefaultRole"] ?? "ContentExecutive";
+
+        if (string.IsNullOrWhiteSpace(clientId))
+        {
+            return StatusCode(500, "Google client ID is not configured.");
+        }
+
+        if (!AllowedRoles.Contains(defaultRole))
+        {
+            return StatusCode(500, "Configured Google default role is invalid.");
+        }
+
+        GoogleJsonWebSignature.Payload payload;
+
+        try
+        {
+            payload = await GoogleJsonWebSignature.ValidateAsync(
+                dto.IdToken,
+                new GoogleJsonWebSignature.ValidationSettings
+                {
+                    Audience = [clientId]
+                });
+        }
+        catch
+        {
+            return Unauthorized("Invalid Google token.");
+        }
+
+        if (!payload.EmailVerified || string.IsNullOrWhiteSpace(payload.Email))
+        {
+            return Unauthorized("Google email is not verified.");
+        }
+
+        var user = _context.Users.FirstOrDefault(x =>
+            x.GoogleSubjectId == payload.Subject ||
+            x.Email == payload.Email);
+
+        if (user == null)
+        {
+            user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = payload.Name ?? payload.Email,
+                Email = payload.Email,
+                PasswordHash = string.Empty,
+                Role = defaultRole,
+                CreatedAt = DateTime.UtcNow,
+                GoogleSubjectId = payload.Subject,
+                AuthProvider = "Google"
+            };
+
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+        }
+        else
+        {
+            var changed = false;
+
+            if (string.IsNullOrWhiteSpace(user.GoogleSubjectId))
+            {
+                user.GoogleSubjectId = payload.Subject;
+                changed = true;
+            }
+
+            if (!string.Equals(user.AuthProvider, "Google", StringComparison.OrdinalIgnoreCase))
+            {
+                user.AuthProvider = "Google";
+                changed = true;
+            }
+
+            if (!string.Equals(user.Name, payload.Name, StringComparison.Ordinal) &&
+                !string.IsNullOrWhiteSpace(payload.Name))
+            {
+                user.Name = payload.Name;
+                changed = true;
+            }
+
+            if (changed)
+            {
+                await _context.SaveChangesAsync();
+            }
         }
 
         return Ok(new AuthResponseDto
