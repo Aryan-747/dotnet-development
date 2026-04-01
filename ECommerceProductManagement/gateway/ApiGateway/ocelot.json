@@ -16,7 +16,7 @@
       "UpstreamPathTemplate": "/gateway/catalog/products/{everything}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
       "DownstreamHostAndPorts": [
-        {
+        { 
           "Host": "localhost",
           "Port": 5002
         }
