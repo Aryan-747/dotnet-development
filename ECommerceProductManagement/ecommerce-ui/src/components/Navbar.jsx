@@ -77,7 +77,8 @@ function Navbar() {
                 Seller Console
               </Link>
               {user?.role === "Admin" ? (
-                <>
+                              <>
+
                   <Link
                     className={isActive("/admin/dashboard") ? "active" : ""}
                     to="/admin/dashboard"
