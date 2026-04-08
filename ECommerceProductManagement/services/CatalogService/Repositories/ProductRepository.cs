@@ -24,6 +24,40 @@ public class ProductRepository : IProductRepository
             .OrderByDescending(x => x.UpdatedAt)
             .ToListAsync();
 
+    public async Task<List<Product>> SearchPublished(string? query, string? category, string? sort)
+    {
+        var products = _context.Products
+            .Where(x => x.IsPublished);
+
+        if (!string.IsNullOrWhiteSpace(query))
+        {
+            var normalizedQuery = query.Trim().ToLower();
+
+            products = products.Where(product =>
+                product.Name.ToLower().Contains(normalizedQuery) ||
+                product.Brand.ToLower().Contains(normalizedQuery) ||
+                product.CategoryName.ToLower().Contains(normalizedQuery) ||
+                product.Tags.ToLower().Contains(normalizedQuery) ||
+                product.SKU.ToLower().Contains(normalizedQuery));
+        }
+
+        if (!string.IsNullOrWhiteSpace(category) &&
+            !string.Equals(category, "All", StringComparison.OrdinalIgnoreCase))
+        {
+            products = products.Where(product => product.CategoryName == category);
+        }
+
+        products = (sort ?? string.Empty).ToLowerInvariant() switch
+        {
+            "price-low" => products.OrderBy(product => product.SellingPrice),
+            "price-high" => products.OrderByDescending(product => product.SellingPrice),
+            "newest" => products.OrderByDescending(product => product.UpdatedAt),
+            _ => products.OrderByDescending(product => product.UpdatedAt)
+        };
+
+        return await products.ToListAsync();
+    }
+
     public async Task<Product> GetById(Guid id)
         => await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
 

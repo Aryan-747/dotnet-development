@@ -12,6 +12,8 @@ function Navbar() {
   const [searchParams] = useSearchParams();
   const [searchText, setSearchText] = useState(searchParams.get("q") ?? "");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const sellerRoles = ["Admin", "ProductManager", "ContentExecutive"];
+  const canAccessSellerConsole = sellerRoles.includes(user?.role ?? "");
 
   const onLogout = () => {
     setIsMenuOpen(false);
@@ -73,9 +75,11 @@ function Navbar() {
 
           {isAuthenticated ? (
             <>
-              <Link className={isActive("/admin/products") ? "active" : ""} to="/admin/products">
-                Seller Console
-              </Link>
+              {canAccessSellerConsole ? (
+                <Link className={isActive("/admin/products") ? "active" : ""} to="/admin/products">
+                  Seller Console
+                </Link>
+              ) : null}
               {user?.role === "Admin" ? (
                               <>
 
