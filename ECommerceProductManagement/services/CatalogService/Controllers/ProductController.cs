@@ -29,6 +29,16 @@ public class ProductController : ControllerBase
         return Ok(await _repo.GetPublished());
     }
 
+    [AllowAnonymous]
+    [HttpGet("preview/search")]
+    public async Task<IActionResult> SearchPublished(
+        [FromQuery] string? q,
+        [FromQuery] string? category,
+        [FromQuery] string? sort)
+    {
+        return Ok(await _repo.SearchPublished(q, category, sort));
+    }
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {

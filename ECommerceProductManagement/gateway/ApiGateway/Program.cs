@@ -24,6 +24,23 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value ?? string.Empty);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+        diagnosticContext.Set("TraceId", httpContext.TraceIdentifier);
+        diagnosticContext.Set("ClientIp", httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown");
+        diagnosticContext.Set(
+            "UserName",
+            httpContext.User?.Identity?.IsAuthenticated == true
+                ? httpContext.User.Identity?.Name ?? "authenticated-user"
+                : "anonymous");
+    };
+});
+
 app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProductWorkflowService.Data;
+using ProductWorkflowService.Filters;
 using ProductWorkflowService.Services;
 using System.Text;
 using Microsoft.OpenApi;
@@ -29,7 +30,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // Controllers
-builder.Services.AddControllers();
+builder.Services.AddScoped<ActionLoggingFilter>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ActionLoggingFilter>();
+});
 
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -47,6 +52,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         [new OpenApiSecuritySchemeReference("Bearer", document)] = []
     });
+
 });
 
 // DbContext
@@ -64,6 +70,23 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value ?? string.Empty);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+        diagnosticContext.Set("TraceId", httpContext.TraceIdentifier);
+        diagnosticContext.Set("ClientIp", httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown");
+        diagnosticContext.Set(
+            "UserName",
+            httpContext.User?.Identity?.IsAuthenticated == true
+                ? httpContext.User.Identity?.Name ?? "authenticated-user"
+                : "anonymous");
+    };
+});
 
 using (var scope = app.Services.CreateScope())
 {

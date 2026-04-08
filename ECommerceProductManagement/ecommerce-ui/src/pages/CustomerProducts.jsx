@@ -6,16 +6,49 @@ import api from "../services/api";
 function CustomerProducts() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allProducts, setAllProducts] = useState([]);
+  const [resolvedRequestKey, setResolvedRequestKey] = useState("");
   const query = searchParams.get("q") ?? "";
   const category = searchParams.get("category") ?? "All";
   const sortBy = searchParams.get("sort") ?? "featured";
+  const requestKey = `${query}|${category}|${sortBy}`;
+  const loading = resolvedRequestKey !== requestKey;
 
   useEffect(() => {
+    let isMounted = true;
+
     api
-      .get("/catalog/products/preview")
-      .then(({ data }) => setProducts(data))
-      .finally(() => setLoading(false));
+      .get("/catalog/products/preview/search", {
+        params: {
+          q: query || undefined,
+          category: category === "All" ? undefined : category,
+          sort: sortBy === "featured" ? undefined : sortBy,
+        },
+      })
+      .then(({ data }) => {
+        if (isMounted) {
+          setProducts(data);
+          setResolvedRequestKey(requestKey);
+        }
+      })
+
+    return () => {
+      isMounted = false;
+    };
+  }, [category, query, requestKey, sortBy]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    api.get("/catalog/products/preview").then(({ data }) => {
+      if (isMounted) {
+        setAllProducts(data);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const updateParams = (next) => {
@@ -33,34 +66,12 @@ function CustomerProducts() {
   };
 
   const categories = useMemo(() => {
-    const values = ["All", ...new Set(products.map((product) => product.categoryName).filter(Boolean))];
+    const values = [
+      "All",
+      ...new Set(allProducts.map((product) => product.categoryName).filter(Boolean)),
+    ];
     return values;
-  }, [products]);
-
-  const filteredProducts = useMemo(() => {
-    const value = query.trim().toLowerCase();
-    let next = products.filter((product) => {
-      const matchesText =
-        !value ||
-        [product.name, product.brand, product.categoryName, product.tags, product.sku]
-          .filter(Boolean)
-          .some((field) => field.toLowerCase().includes(value));
-      const matchesCategory = category === "All" || product.categoryName === category;
-      return matchesText && matchesCategory;
-    });
-
-    if (sortBy === "price-low") {
-      next = [...next].sort((a, b) => a.sellingPrice - b.sellingPrice);
-    } else if (sortBy === "price-high") {
-      next = [...next].sort((a, b) => b.sellingPrice - a.sellingPrice);
-    } else if (sortBy === "newest") {
-      next = [...next].sort(
-        (a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-      );
-    }
-
-    return next;
-  }, [category, products, query, sortBy]);
+  }, [allProducts]);
 
   return (
     <div className="marketplace-page">
@@ -118,7 +129,7 @@ function CustomerProducts() {
             <div>
               <h2>Results</h2>
               <p className="muted">
-                {filteredProducts.length} items in {category === "All" ? "all departments" : category}
+                {products.length} items in {category === "All" ? "all departments" : category}
               </p>
             </div>
 
@@ -150,12 +161,12 @@ function CustomerProducts() {
 
           {loading ? <p className="screen-message">Loading storefront preview...</p> : null}
 
-          {!loading && filteredProducts.length === 0 ? (
+          {!loading && products.length === 0 ? (
             <p className="screen-message">No published products match your filters.</p>
           ) : null}
 
           <div className="market-grid">
-            {filteredProducts.map((product) => (
+            {products.map((product) => (
               <ProductCard key={product.id} product={product} mode="customer" />
             ))}
           </div>

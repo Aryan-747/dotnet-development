@@ -1,4 +1,5 @@
 using CatalogService.Data;
+using CatalogService.Filters;
 using CatalogService.Repositories;
 using CatalogService.Services;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +31,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // ✅ Add services
-builder.Services.AddControllers();
+builder.Services.AddScoped<ActionLoggingFilter>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ActionLoggingFilter>();
+});
 
 // ✅ Swagger (MUST HAVE)
 builder.Services.AddEndpointsApiExplorer();
@@ -69,6 +74,23 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging(options =>
+{
+    options.MessageTemplate = "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
+    options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+    {
+        diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value ?? string.Empty);
+        diagnosticContext.Set("RequestScheme", httpContext.Request.Scheme);
+        diagnosticContext.Set("TraceId", httpContext.TraceIdentifier);
+        diagnosticContext.Set("ClientIp", httpContext.Connection.RemoteIpAddress?.ToString() ?? "unknown");
+        diagnosticContext.Set(
+            "UserName",
+            httpContext.User?.Identity?.IsAuthenticated == true
+                ? httpContext.User.Identity?.Name ?? "authenticated-user"
+                : "anonymous");
+    };
+});
 
 using (var scope = app.Services.CreateScope())
 {
