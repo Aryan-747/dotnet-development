@@ -1,0 +1,71 @@
+<div class="page page-spacious">
+  <div class="section-header">
+    <div>
+      <p class="eyebrow">Cart Storefront Preview</p>
+      <h1>Your shopping cart</h1>
+      <p class="muted">Review items, adjust quantities, and preview order value.</p>
+    </div>
+  </div>
+
+  @if (items().length === 0) {
+    <div class="empty-panel">
+      <p>Your preview cart is empty.</p>
+      <a class="ghost-link" routerLink="/customer/products">Browse published products</a>
+    </div>
+  } @else {
+    <div class="cart-layout">
+      <section class="cart-items">
+        @for (item of items(); track item.id) {
+          <article class="cart-item-card">
+            <img [src]="item.primaryImageUrl" [alt]="item.name" class="cart-item-image" />
+
+            <div class="cart-item-copy">
+              <span class="cart-item-chip">In cart</span>
+              <h3>{{ item.name }}</h3>
+              <p class="muted">{{ item.brand }}</p>
+              <p class="price">Rs. {{ item.sellingPrice || 0 | number: '1.0-0' }}</p>
+              <p [class]="item.stockQuantity > 0 ? 'stock-good' : 'stock-low'">
+                {{ item.stockQuantity > 0 ? 'Eligible for fast delivery' : 'Out of stock' }}
+              </p>
+              <div class="cart-item-meta">
+                <span>Unit price: Rs. {{ item.sellingPrice || 0 | number: '1.0-0' }}</span>
+                <span>Line total: Rs. {{ (item.sellingPrice || 0) * item.quantity | number: '1.0-0' }}</span>
+              </div>
+            </div>
+
+            <div class="cart-item-actions">
+              <div class="cart-qty-group">
+                <button class="cart-qty-button" type="button" (click)="decreaseItem(item.id)">-</button>
+                <span class="cart-qty-value">{{ item.quantity }}</span>
+                <button class="cart-qty-button" type="button" (click)="addItem(item)">+</button>
+              </div>
+              <button class="cart-remove-link" type="button" (click)="removeItem(item.id)">
+                Remove from cart
+              </button>
+            </div>
+          </article>
+        }
+      </section>
+
+      <aside class="card cart-summary-card">
+        <p class="eyebrow">Order summary</p>
+        <h2>Subtotal ({{ totalItems() }} items)</h2>
+        <p class="price-large">Rs. {{ totalPrice() | number: '1.0-0' }}</p>
+        <div class="summary-line">
+          <span>Shipping</span>
+          <strong>Free</strong>
+        </div>
+        <div class="summary-line">
+          <span>Estimated tax</span>
+          <strong>Rs. {{ estimatedTax() | number: '1.0-0' }}</strong>
+        </div>
+        <div class="summary-line summary-line-total">
+          <span>Order total</span>
+          <strong>Rs. {{ grandTotal() | number: '1.0-0' }}</strong>
+        </div>
+        <button type="button">Proceed to checkout preview</button>
+        <a class="ghost-link" routerLink="/customer/products">Continue shopping</a>
+      </aside>
+    </div>
+  }
+</div>

@@ -50,7 +50,10 @@ namespace ProductWorkflowService.Controllers
         [HttpGet("queue")]
         public IActionResult GetQueue()
         {
-            return Ok(_context.Approvals.OrderByDescending(x => x.UpdatedAt).ToList());
+            return Ok(_context.Approvals
+                .Where(x => x.Status == "Pending" || x.Status == "ReadyForReview")
+                .OrderByDescending(x => x.UpdatedAt)
+                .ToList());
         }
 
         [Authorize(Roles = "Admin,ProductManager")]
@@ -62,14 +65,24 @@ namespace ProductWorkflowService.Controllers
                 return BadRequest("Invalid price");
             }
 
-            var price = _context.Prices.FirstOrDefault(x => x.ProductId == productId)
-                ?? new Price { Id = Guid.NewGuid(), ProductId = productId };
+            var price = _context.Prices.FirstOrDefault(x => x.ProductId == productId);
+            var isNew = price == null;
+
+            price ??= new Price { Id = Guid.NewGuid(), ProductId = productId };
 
             price.MRP = dto.Mrp;
             price.SellingPrice = dto.SellingPrice;
             price.UpdatedAt = DateTime.UtcNow;
 
-            _context.Prices.Update(price);
+            if (isNew)
+            {
+                _context.Prices.Add(price);
+            }
+            else
+            {
+                _context.Prices.Update(price);
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok(price);
@@ -79,8 +92,10 @@ namespace ProductWorkflowService.Controllers
         [HttpPut("inventory/{productId:guid}")]
         public async Task<IActionResult> SaveInventory(Guid productId, InventoryDto dto)
         {
-            var inventory = _context.Inventories.FirstOrDefault(x => x.ProductId == productId)
-                ?? new Inventory { Id = Guid.NewGuid(), ProductId = productId };
+            var inventory = _context.Inventories.FirstOrDefault(x => x.ProductId == productId);
+            var isNew = inventory == null;
+
+            inventory ??= new Inventory { Id = Guid.NewGuid(), ProductId = productId };
 
             inventory.Quantity = dto.Quantity;
             inventory.AvailabilityMessage = string.IsNullOrWhiteSpace(dto.AvailabilityMessage)
@@ -88,7 +103,15 @@ namespace ProductWorkflowService.Controllers
                 : dto.AvailabilityMessage;
             inventory.UpdatedAt = DateTime.UtcNow;
 
-            _context.Inventories.Update(inventory);
+            if (isNew)
+            {
+                _context.Inventories.Add(inventory);
+            }
+            else
+            {
+                _context.Inventories.Update(inventory);
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok(inventory);
@@ -98,8 +121,10 @@ namespace ProductWorkflowService.Controllers
         [HttpPost("submit/{productId:guid}")]
         public async Task<IActionResult> Submit(Guid productId)
         {
-            var approval = _context.Approvals.FirstOrDefault(x => x.ProductId == productId)
-                ?? new Approval { Id = Guid.NewGuid(), ProductId = productId };
+            var approval = _context.Approvals.FirstOrDefault(x => x.ProductId == productId);
+            var isNew = approval == null;
+
+            approval ??= new Approval { Id = Guid.NewGuid(), ProductId = productId };
 
             approval.Status = "Pending";
             approval.Remarks = "Submitted for admin review";
@@ -107,7 +132,15 @@ namespace ProductWorkflowService.Controllers
             approval.ReviewedBy = string.Empty;
             approval.UpdatedAt = DateTime.UtcNow;
 
-            _context.Approvals.Update(approval);
+            if (isNew)
+            {
+                _context.Approvals.Add(approval);
+            }
+            else
+            {
+                _context.Approvals.Update(approval);
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok(approval);

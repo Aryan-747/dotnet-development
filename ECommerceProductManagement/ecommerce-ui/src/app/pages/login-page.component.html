@@ -1,0 +1,40 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-copy">
+      <h1 style="color: white">Sign In To The Product Management Portal</h1>
+      <p>
+        Use the seeded users or your own signup account to manage catalog, workflow,
+        and reporting features.
+      </p>
+    </div>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()">
+      <label>
+        Email
+        <input [(ngModel)]="form.email" name="email" type="email" required />
+      </label>
+
+      <label>
+        Password
+        <input [(ngModel)]="form.password" name="password" type="password" required />
+      </label>
+
+      @if (error) {
+        <p class="banner error">{{ error }}</p>
+      }
+
+      <button type="submit" [disabled]="submitting">
+        {{ submitting ? 'Signing in...' : 'Login' }}
+      </button>
+
+      <div style="display: grid; gap: 12px; justify-items: center">
+        <p class="muted" style="margin: 0">or</p>
+        <div #googleButtonRef></div>
+      </div>
+
+      <p class="muted">
+        Need a new account? <a routerLink="/auth/signup">Create one</a>
+      </p>
+    </form>
+  </div>
+</div>

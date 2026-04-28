@@ -1,0 +1,113 @@
+@if (!summary()) {
+  <div class="screen-message">Loading admin dashboard...</div>
+} @else {
+  <div class="page page-spacious">
+    <section class="dashboard-hero">
+      <div class="dashboard-hero-main">
+        <p class="eyebrow">Home Product Console</p>
+        <h1>Operational health at a glance</h1>
+        <p>
+          Track product readiness, approval workload, and recent audit signals from one
+          command center built for fast decision-making.
+        </p>
+        <div class="dashboard-hero-tags">
+          <span>Catalog visibility</span>
+          <span>Approval momentum</span>
+          <span>Audit watch</span>
+        </div>
+      </div>
+
+      <div class="dashboard-hero-side">
+        <p class="eyebrow">Today</p>
+        <h2>{{ summary()!.auditsToday }} audit events</h2>
+        <p class="muted">Keep an eye on approval state changes and publishing activity across the catalog.</p>
+      </div>
+    </section>
+
+    <section class="dashboard-metrics">
+      <article class="dashboard-metric-card accent-blue">
+        <p>Total products</p>
+        <strong>{{ products().length }}</strong>
+        <span>Inventory tracked in the catalog</span>
+      </article>
+      <article class="dashboard-metric-card accent-green">
+        <p>Published preview items</p>
+        <strong>{{ publishedCount }}</strong>
+        <span>Live on the storefront preview</span>
+      </article>
+      <article class="dashboard-metric-card accent-amber">
+        <p>Approval queue</p>
+        <strong>{{ queue().length }}</strong>
+        <span>Waiting for admin review</span>
+      </article>
+      <article class="dashboard-metric-card accent-rose">
+        <p>Audit activity today</p>
+        <strong>{{ summary()!.auditsToday }}</strong>
+        <span>Operational events logged today</span>
+      </article>
+    </section>
+
+    <div class="split-grid">
+      <section class="card dashboard-panel">
+        <div class="section-header dashboard-panel-header">
+          <div><p class="eyebrow">Quick links</p><h2>Action board</h2></div>
+          <span class="dashboard-panel-kicker">Go straight to the highest-value tasks</span>
+        </div>
+        <div class="dashboard-action-grid">
+          <a class="dashboard-action-card" routerLink="/admin/products">
+            <strong>Manage product catalog</strong>
+            <span>Update metadata, pricing, media, and readiness details.</span>
+          </a>
+          <a class="dashboard-action-card" routerLink="/admin/workflow">
+            <strong>Review approval queue</strong>
+            <span>Check pending submissions and move products toward publish state.</span>
+          </a>
+          <a class="dashboard-action-card" routerLink="/admin/reports">
+            <strong>Open reports and exports</strong>
+            <span>Inspect activity history and export audit snapshots.</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="card dashboard-panel">
+        <div class="section-header dashboard-panel-header">
+          <div><p class="eyebrow">Recent activity</p><h2>Audit feed</h2></div>
+          <span class="dashboard-panel-kicker">Latest operational changes across products</span>
+        </div>
+        <div class="stack dashboard-timeline">
+          @for (activity of summary()!.recentActivities; track activity.id) {
+            <article class="dashboard-timeline-item">
+              <div class="dashboard-timeline-top">
+                <span [class]="statusClass(activity.action)">{{ statusLabel(activity.action) }}</span>
+                <span class="muted">{{ formatTimestamp(activity.createdAt) }}</span>
+              </div>
+              <p>{{ activity.details }}</p>
+              <span class="muted">{{ activity.actorEmail }}</span>
+            </article>
+          }
+        </div>
+      </section>
+    </div>
+
+    <section class="card dashboard-panel">
+      <div class="section-header dashboard-panel-header">
+        <div><p class="eyebrow">Alert panel</p><h2>Pending operational signals</h2></div>
+        <span class="dashboard-panel-kicker">Items that need timely attention</span>
+      </div>
+      <div class="stack dashboard-alert-list">
+        @if (alerts().length === 0) {
+          <p class="muted">No alerts need attention.</p>
+        }
+        @for (alert of alerts(); track alert.id) {
+          <article class="dashboard-alert-item">
+            <div class="dashboard-timeline-top">
+              <span [class]="statusClass(alert.action)">{{ statusLabel(alert.action) }}</span>
+              <span class="muted">{{ formatTimestamp(alert.createdAt) }}</span>
+            </div>
+            <p>{{ alert.details }}</p>
+          </article>
+        }
+      </div>
+    </section>
+  </div>
+}

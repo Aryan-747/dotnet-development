@@ -1,0 +1,80 @@
+<nav class="navbar storefront-nav">
+  <div class="nav-brand">
+    <a class="brand-lockup" routerLink="/customer/products">
+      <span class="brand-badge">epm</span>
+      <div>
+        <h2>ShopSphere</h2>
+      </div>
+    </a>
+  </div>
+
+  <form class="nav-search-shell" (ngSubmit)="onSearchSubmit()">
+    <span class="nav-search-tag">All</span>
+    <input
+      class="nav-search"
+      [(ngModel)]="searchText"
+      name="navbarSearch"
+      placeholder="Search products, brands and departments"
+    />
+    <button class="nav-search-tag search-cta nav-search-button" type="submit">Search</button>
+  </form>
+
+  <div class="nav-links nav-links-utility">
+    <a routerLink="/customer/products" routerLinkActive="active">Storefront</a>
+    @if (isCustomer()) {
+      <a routerLink="/customer/cart" routerLinkActive="active" class="cart-link">
+        Cart
+        @if (totalItems() > 0) {
+          <span class="cart-count">{{ totalItems() }}</span>
+        }
+      </a>
+    }
+
+    @if (isAuthenticated()) {
+      @if (canAccessSellerConsole()) {
+        <a routerLink="/admin/products" routerLinkActive="active">Seller Console</a>
+      }
+      @if (user()?.role === 'Admin') {
+        <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/admin/workflow" routerLinkActive="active">Workflow</a>
+        <a routerLink="/admin/reports" routerLinkActive="active">Reports</a>
+      }
+
+      <div class="account-menu">
+        <button
+          class="nav-button account-trigger"
+          type="button"
+          [attr.aria-expanded]="isMenuOpen()"
+          (click)="toggleMenu()"
+        >
+          {{ user()?.name }}
+          <span class="account-caret">{{ isMenuOpen() ? '▲' : '▼' }}</span>
+        </button>
+
+        @if (isMenuOpen()) {
+          <div class="account-dropdown">
+            <p class="account-name">{{ user()?.name }}</p>
+            <p class="account-role">{{ user()?.role }}</p>
+            <button class="account-dropdown-button" type="button" (click)="onLogout()">
+              Logout
+            </button>
+          </div>
+        }
+      </div>
+    } @else {
+      <a routerLink="/auth/login" routerLinkActive="active">Sign in</a>
+      <a routerLink="/auth/signup" routerLinkActive="active">Register</a>
+    }
+  </div>
+</nav>
+
+@if (isCustomerView()) {
+  <div class="subnav-bar">
+    <a routerLink="/customer/products">Today's Deals</a>
+    <a routerLink="/customer/products" [queryParams]="{ category: 'Electronics' }">Electronics</a>
+    <a routerLink="/customer/products" [queryParams]="{ category: 'Fashion' }">Fashion</a>
+    <a routerLink="/customer/products" [queryParams]="{ category: 'Kitchen' }">Home &amp; Kitchen</a>
+    <a routerLink="/customer/products" [queryParams]="{ category: 'Fitness' }">Fitness</a>
+    <a routerLink="/customer/products" [queryParams]="{ q: 'featured' }">Prime Preview</a>
+  </div>
+}

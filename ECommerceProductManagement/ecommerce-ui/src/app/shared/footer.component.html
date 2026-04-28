@@ -1,0 +1,61 @@
+<footer class="site-footer">
+  <button class="footer-top-link" type="button" (click)="scrollToTop()">Back to top</button>
+
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="brand-lockup">
+        <span class="brand-badge">epm</span>
+        <div>
+          <h3>ShopSphere</h3>
+          <p class="muted">
+            Product discovery, preview cart, seller operations, and reports in one
+            ecommerce workspace.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h4>Shop</h4>
+        <a routerLink="/customer/products">All Products</a>
+        <a routerLink="/customer/products" [queryParams]="{ category: 'Electronics' }">Electronics</a>
+        <a routerLink="/customer/products" [queryParams]="{ category: 'Fashion' }">Fashion</a>
+        <a routerLink="/customer/cart">Cart</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Seller</h4>
+        <a routerLink="/admin/products">Seller Console</a>
+        <a routerLink="/admin/dashboard">Dashboard</a>
+        <a routerLink="/admin/workflow">Workflow</a>
+        <a routerLink="/admin/reports">Reports</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Support</h4>
+        <a href="mailto:support&#64;shopsphere.local">support&#64;shopsphere.local</a>
+        <a href="tel:+919999999999">+91 99999 99999</a>
+        <a href="https://localhost:5000/gateway/catalog/products/preview">API Preview</a>
+        <a routerLink="/auth/login">Account Access</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>Why ShopSphere</h4>
+        <p>Fast search-driven browsing</p>
+        <p>Live preview cart</p>
+        <p>Structured product lifecycle</p>
+        <p>Role-based operational controls</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2026 ShopSphere. Crafted for ecommerce product management workflows.</p>
+    <div class="footer-meta-links">
+      <span>Privacy</span>
+      <span>Terms</span>
+      <span>Accessibility</span>
+    </div>
+  </div>
+</footer>

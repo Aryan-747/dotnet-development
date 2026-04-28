@@ -1,0 +1,55 @@
+<div class="page page-spacious">
+  <section class="workflow-hero">
+    <div class="workflow-hero-main">
+      <p class="eyebrow">Approval Queue</p>
+      <h1>Review and publish pipeline</h1>
+      <p>
+        Monitor pending submissions, assess readiness, and move products through the final
+        approval path with clarity.
+      </p>
+      <div class="dashboard-hero-tags">
+        <span>Queue visibility</span>
+        <span>Approval readiness</span>
+        <span>Fast review handoff</span>
+      </div>
+    </div>
+
+    <div class="workflow-hero-side">
+      <p class="eyebrow">Queue summary</p>
+      <h2>{{ queue().length }} items waiting</h2>
+      <p class="muted">Only active review candidates stay in this workspace.</p>
+    </div>
+  </section>
+
+  <section class="card workflow-panel">
+    <div class="section-header workflow-panel-header">
+      <div>
+        <p class="eyebrow">Live review list</p>
+        <h2>Items awaiting action</h2>
+      </div>
+      <span class="dashboard-panel-kicker">Open any product to approve, reject, or publish it</span>
+    </div>
+
+    <div class="stack workflow-queue-list">
+      @if (queue().length === 0) {
+        <div class="empty-panel">
+          <p>No products are currently waiting in the approval queue.</p>
+        </div>
+      }
+
+    @for (item of queue(); track item.id) {
+      <article class="workflow-queue-card">
+        <div class="dashboard-timeline-top">
+          <span [class]="statusClass(item.status)">{{ statusLabel(item.status) }}</span>
+          <span class="muted">{{ formatTimestamp(item.updatedAt) }}</span>
+        </div>
+        <p>{{ item.remarks || 'Awaiting reviewer notes.' }}</p>
+        <div class="workflow-queue-actions">
+          <span class="muted">Requested by: {{ item.requestedBy || 'Unknown' }}</span>
+          <a class="ghost-link" [routerLink]="['/admin/products', item.productId]">Open product workspace</a>
+        </div>
+      </article>
+    }
+    </div>
+  </section>
+</div>

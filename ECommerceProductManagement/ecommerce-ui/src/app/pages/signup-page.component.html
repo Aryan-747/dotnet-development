@@ -1,0 +1,56 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-copy">
+      <p class="eyebrow">Account Access</p>
+      <h1>Create your ShopSphere account</h1>
+      <p>Customer accounts can browse, sign in with Google, and use preview cart features.</p>
+    </div>
+
+    <form class="auth-form" (ngSubmit)="onSubmit()">
+      <label>
+        Full name
+        <input [(ngModel)]="form.name" name="name" required />
+      </label>
+
+      <label>
+        Email
+        <input [(ngModel)]="form.email" name="email" type="email" required />
+      </label>
+
+      <label>
+        Role
+        <select [(ngModel)]="form.role" name="role">
+          <option value="Customer">Customer</option>
+          <option value="Admin">Admin</option>
+          <option value="ProductManager">Product Manager</option>
+          <option value="ContentExecutive">Content Executive</option>
+        </select>
+      </label>
+
+      <label>
+        Password
+        <input [(ngModel)]="form.password" name="password" type="password" required />
+      </label>
+
+      <label>
+        Confirm password
+        <input [(ngModel)]="form.confirmPassword" name="confirmPassword" type="password" required />
+      </label>
+
+      @if (message) {
+        <p class="banner success">{{ message }}</p>
+      }
+      @if (error) {
+        <p class="banner error">{{ error }}</p>
+      }
+
+      <button type="submit" [disabled]="submitting">
+        {{ submitting ? 'Creating...' : 'Create account' }}
+      </button>
+
+      <p class="muted">
+        Already have access? <a routerLink="/auth/login">Go to login</a>
+      </p>
+    </form>
+  </div>
+</div>

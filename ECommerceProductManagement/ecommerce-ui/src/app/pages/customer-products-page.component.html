@@ -1,0 +1,95 @@
+<div class="marketplace-page">
+  <section class="market-hero">
+    <div class="market-hero-card hero-main">
+      <p class="eyebrow">Storefront Preview</p>
+      <h1>Discover products the way customers shop online</h1>
+      <p>
+        Browse departments, compare prices, and review published items in a familiar
+        ecommerce-style layout.
+      </p>
+      <div class="hero-actions">
+        <button type="button">Top picks</button>
+        <button class="ghost-link" type="button">Fast delivery</button>
+      </div>
+    </div>
+
+    <div class="market-hero-card">
+      <p class="eyebrow">Deals Snapshot</p>
+      <h2>10+ live products ready for preview</h2>
+      <p class="muted">Fresh additions across electronics, fashion, kitchen, fitness, and home.</p>
+    </div>
+  </section>
+
+  <section class="market-shell">
+    <aside class="market-sidebar">
+      <div class="sidebar-card">
+        <h3>Department</h3>
+        <div class="sidebar-options">
+          @for (entry of categories(); track entry) {
+            <button
+              type="button"
+              [class]="entry === category() ? 'sidebar-option active' : 'sidebar-option'"
+              (click)="updateParams({ category: entry })"
+            >
+              {{ entry }}
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="sidebar-card">
+        <h3>Shop by</h3>
+        <p class="muted">Free delivery eligible</p>
+        <p class="muted">Best rated picks</p>
+        <p class="muted">Everyday essentials</p>
+      </div>
+    </aside>
+
+    <div class="market-results">
+      <div class="results-toolbar">
+        <div>
+          <h2>Results</h2>
+          <p class="muted">
+            {{ products().length }} items in {{ category() === 'All' ? 'all departments' : category() }}
+          </p>
+        </div>
+
+        <div class="toolbar-controls">
+          <input
+            [ngModel]="query()"
+            (ngModelChange)="updateParams({ q: $event })"
+            placeholder="Search by brand, category or SKU"
+          />
+
+          <select [ngModel]="sortBy()" (ngModelChange)="updateParams({ sort: $event })">
+            <option value="featured">Featured</option>
+            <option value="newest">Newest arrivals</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="promo-strip">
+        <span>Top rated products</span>
+        <span>Secure checkout preview</span>
+        <span>Detailed product pages</span>
+        <span>Operationally published catalog</span>
+      </div>
+
+      @if (loading()) {
+        <p class="screen-message">Loading storefront preview...</p>
+      }
+
+      @if (!loading() && products().length === 0) {
+        <p class="screen-message">No published products match your filters.</p>
+      }
+
+      <div class="market-grid">
+        @for (product of products(); track product.id) {
+          <app-product-card [product]="product" mode="customer"></app-product-card>
+        }
+      </div>
+    </div>
+  </section>
+</div>

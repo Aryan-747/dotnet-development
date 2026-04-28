@@ -14,7 +14,7 @@ using System.Text.Json.Serialization;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private static readonly string[] AllowedRoles = ["Admin", "ProductManager", "ContentExecutive"];
+    private static readonly string[] AllowedRoles = ["Admin", "ProductManager", "ContentExecutive", "Customer"];
 
     private readonly IdentityDbContext _context;
     private readonly TokenService _tokenService;
@@ -98,7 +98,7 @@ public class AuthController : ControllerBase
         }
 
         var clientId = _configuration["GoogleAuth:ClientId"];
-        var defaultRole = _configuration["GoogleAuth:DefaultRole"] ?? "ContentExecutive";
+        var defaultRole = _configuration["GoogleAuth:DefaultRole"] ?? "Customer";
 
         if (string.IsNullOrWhiteSpace(clientId))
         {
@@ -167,7 +167,7 @@ public class AuthController : ControllerBase
         var clientId = _configuration["GoogleAuth:ClientId"];
         var clientSecret = _configuration["GoogleAuth:ClientSecret"];
         var redirectUri = _configuration["GoogleAuth:RedirectUri"];
-        var defaultRole = _configuration["GoogleAuth:DefaultRole"] ?? "ContentExecutive";
+        var defaultRole = _configuration["GoogleAuth:DefaultRole"] ?? "Customer";
 
         if (string.IsNullOrWhiteSpace(clientId) ||
             string.IsNullOrWhiteSpace(clientSecret) ||
@@ -267,6 +267,12 @@ public class AuthController : ControllerBase
         else
         {
             var changed = false;
+
+            if (!string.Equals(user.Role, defaultRole, StringComparison.Ordinal))
+            {
+                user.Role = defaultRole;
+                changed = true;
+            }
 
             if (string.IsNullOrWhiteSpace(user.GoogleSubjectId))
             {

@@ -16,6 +16,7 @@ public class ProductController : ControllerBase
         _repo = repo;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> Get()
     {
@@ -39,6 +40,7 @@ public class ProductController : ControllerBase
         return Ok(await _repo.SearchPublished(q, category, sort));
     }
 
+    [AllowAnonymous]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById(Guid id)
     {
