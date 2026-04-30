@@ -25,4 +25,8 @@ export class ApiService {
   getAudit(productId: string) {
     return this.http.get<AuditLog[]>(`/admin/audit/${productId}`);
   }
+
+  deleteWorkflowProductData(productId: string) {
+    return this.http.delete<void>(`/workflow/product/${productId}`);
+  }
 }

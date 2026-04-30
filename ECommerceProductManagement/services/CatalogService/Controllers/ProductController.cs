@@ -135,4 +135,19 @@ public class ProductController : ControllerBase
         await _repo.Update(product);
         return Ok(product);
     }
+
+    [Authorize(Roles = "Admin,ProductManager")]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var product = await _repo.GetById(id);
+
+        if (product == null)
+        {
+            return NotFound();
+        }
+
+        await _repo.Delete(product);
+        return NoContent();
+    }
 }

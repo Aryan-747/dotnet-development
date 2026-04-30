@@ -205,5 +205,21 @@ namespace ProductWorkflowService.Controllers
             await _context.SaveChangesAsync();
             return Ok(approval);
         }
+
+        [Authorize(Roles = "Admin,ProductManager")]
+        [HttpDelete("product/{productId:guid}")]
+        public async Task<IActionResult> DeleteProductData(Guid productId)
+        {
+            var prices = _context.Prices.Where(x => x.ProductId == productId);
+            var inventories = _context.Inventories.Where(x => x.ProductId == productId);
+            var approvals = _context.Approvals.Where(x => x.ProductId == productId);
+
+            _context.Prices.RemoveRange(prices);
+            _context.Inventories.RemoveRange(inventories);
+            _context.Approvals.RemoveRange(approvals);
+
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

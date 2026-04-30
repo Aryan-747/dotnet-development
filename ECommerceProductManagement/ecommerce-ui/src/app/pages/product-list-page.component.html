@@ -1,5 +1,5 @@
-<div class="page page-spacious">
-  <section class="hero compact">
+<div class="page page-spacious admin-surface-page">
+  <section class="hero compact console-header-card">
     <div>
       <p class="eyebrow">Admin Product Management</p>
       <h1>Catalog operations workspace</h1>
@@ -10,16 +10,16 @@
     </div>
   </section>
 
-  <div class="split-grid">
-    <section class="card">
-      <div class="section-header">
+  <div class="split-grid admin-product-layout">
+    <section class="card console-panel console-form-panel">
+      <div class="section-header admin-section-header">
         <div>
           <p class="eyebrow">Create product</p>
           <h2>New onboarding entry</h2>
         </div>
       </div>
 
-      <form class="form-grid" (ngSubmit)="onCreate()">
+      <form class="form-grid admin-form-grid" (ngSubmit)="onCreate()">
         <label>Product name<input [(ngModel)]="form.name" name="name" required /></label>
         <label>SKU<input [(ngModel)]="form.sku" name="sku" required /></label>
         <label>Brand<input [(ngModel)]="form.brand" name="brand" /></label>
@@ -45,14 +45,14 @@
           <p class="banner error full-span">{{ error }}</p>
         }
 
-        <button class="full-span" type="submit" [disabled]="saving">
+        <button class="full-span action-button action-button-neutral" type="submit" [disabled]="saving">
           {{ saving ? 'Creating...' : 'Create as ' + (user()?.role || '') }}
         </button>
       </form>
     </section>
 
-    <section class="card">
-      <div class="section-header">
+    <section class="card console-panel">
+      <div class="section-header admin-section-header">
         <div>
           <p class="eyebrow">Product list</p>
           <h2>Existing catalog</h2>

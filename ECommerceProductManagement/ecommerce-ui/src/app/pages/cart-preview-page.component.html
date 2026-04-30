@@ -1,5 +1,5 @@
-<div class="page page-spacious">
-  <div class="section-header">
+<div class="page page-spacious storefront-surface-page">
+  <div class="section-header console-header-card cart-page-header">
     <div>
       <p class="eyebrow">Cart Storefront Preview</p>
       <h1>Your shopping cart</h1>
@@ -8,7 +8,7 @@
   </div>
 
   @if (items().length === 0) {
-    <div class="empty-panel">
+    <div class="empty-panel console-panel">
       <p>Your preview cart is empty.</p>
       <a class="ghost-link" routerLink="/customer/products">Browse published products</a>
     </div>
@@ -47,7 +47,7 @@
         }
       </section>
 
-      <aside class="card cart-summary-card">
+      <aside class="card cart-summary-card console-panel">
         <p class="eyebrow">Order summary</p>
         <h2>Subtotal ({{ totalItems() }} items)</h2>
         <p class="price-large">Rs. {{ totalPrice() | number: '1.0-0' }}</p>

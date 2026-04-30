@@ -72,4 +72,10 @@ public class ProductRepository : IProductRepository
         _context.Products.Update(product);
         await _context.SaveChangesAsync();
     }
+
+    public async Task Delete(Product product)
+    {
+        _context.Products.Remove(product);
+        await _context.SaveChangesAsync();
+    }
 }

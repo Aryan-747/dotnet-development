@@ -1,12 +1,12 @@
-<div class="auth-page">
-  <div class="auth-card">
+<div class="auth-page auth-surface-page">
+  <div class="auth-card auth-card-modern">
     <div class="auth-copy">
       <p class="eyebrow">Account Access</p>
       <h1>Create your ShopSphere account</h1>
       <p>Customer accounts can browse, sign in with Google, and use preview cart features.</p>
     </div>
 
-    <form class="auth-form" (ngSubmit)="onSubmit()">
+    <form class="auth-form auth-form-modern" (ngSubmit)="onSubmit()">
       <label>
         Full name
         <input [(ngModel)]="form.name" name="name" required />
@@ -44,7 +44,7 @@
         <p class="banner error">{{ error }}</p>
       }
 
-      <button type="submit" [disabled]="submitting">
+      <button type="submit" class="action-button action-button-neutral" [disabled]="submitting">
         {{ submitting ? 'Creating...' : 'Create account' }}
       </button>
 

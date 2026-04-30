@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../services/auth.service';
 import { Product } from '../models';
 import { ProductCardComponent } from '../shared/product-card.component';
+import { ToastService } from '../services/toast.service';
 
 const emptyProduct = {
   name: '',
@@ -52,7 +53,8 @@ export class ProductListPageComponent {
     private readonly catalogService: CatalogService,
     private readonly http: HttpClient,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly toastService: ToastService
   ) {
     void this.loadProducts();
   }
@@ -73,6 +75,7 @@ export class ProductListPageComponent {
       );
       this.form = { ...emptyProduct };
       await this.loadProducts();
+      this.toastService.show(`Product "${data.name}" created successfully.`);
       await this.router.navigate(['/admin/products', data.id]);
     } catch (error: any) {
       this.error = error?.error || 'Unable to create product.';

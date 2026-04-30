@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, signal, computed } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { CatalogService } from '../services/catalog.service';
 import { ApiService } from '../services/api.service';
@@ -10,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 import { Product, WorkflowSnapshot } from '../models';
 import { formatServerDate } from '../utils/date-format';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   standalone: true,
@@ -39,16 +41,22 @@ export class ProductDetailsPageComponent {
     this.mode() === 'admin' &&
     ['Admin', 'ProductManager', 'ContentExecutive'].includes(this.authService.user()?.role ?? '')
   );
+  protected readonly canDelete = computed(() =>
+    this.mode() === 'admin' &&
+    ['Admin', 'ProductManager'].includes(this.authService.user()?.role ?? '')
+  );
   protected readonly isAdmin = computed(() => this.authService.user()?.role === 'Admin');
   protected readonly canSubmitForReview = computed(() => this.authService.user()?.role !== 'ContentExecutive');
 
   constructor(
     private readonly route: ActivatedRoute,
+    private readonly router: Router,
     private readonly catalogService: CatalogService,
     private readonly apiService: ApiService,
     private readonly http: HttpClient,
     private readonly authService: AuthService,
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
+    private readonly toastService: ToastService
   ) {
     const mode = (this.route.snapshot.data['mode'] as 'admin' | 'customer') ?? 'admin';
     this.mode.set(mode);
@@ -76,6 +84,7 @@ export class ProductDetailsPageComponent {
     await firstValueFrom(this.http.put(`/catalog/products/${this.product()!.id}`, this.form));
     await this.saveAudit('ProductUpdated', `${this.form.name} metadata updated.`);
     this.message = 'Product details saved.';
+    this.toastService.show(`Product "${this.form.name}" details saved successfully.`);
     await this.loadData();
   }
 
@@ -116,7 +125,31 @@ export class ProductDetailsPageComponent {
     );
     await this.saveAudit('SubmittedForReview', `${this.form.name} submitted for approval.`);
     this.message = 'Product submitted for admin review.';
+    this.toastService.show(`Product "${this.form.name}" submitted for review successfully.`);
     await this.loadData();
+  }
+
+  protected async deleteProduct(): Promise<void> {
+    const product = this.product();
+    if (!product) {
+      return;
+    }
+
+    const confirmed = window.confirm(`Delete "${product.name}"? This action cannot be undone.`);
+    if (!confirmed) {
+      return;
+    }
+
+    try {
+      await firstValueFrom(this.apiService.deleteWorkflowProductData(product.id));
+      await firstValueFrom(this.catalogService.deleteAdminProduct(product.id));
+      await this.saveAudit('ProductDeleted', `${product.name} was deleted from the admin console.`);
+      this.toastService.show(`Product "${product.name}" deleted successfully.`);
+      await this.router.navigate(['/admin/products']);
+    } catch {
+      this.message = 'Unable to delete product.';
+      this.toastService.show('Unable to delete product.', 'error');
+    }
   }
 
   protected async reviewAction(action: 'approve' | 'reject' | 'publish', status: string, auditAction: string): Promise<void> {
@@ -133,6 +166,7 @@ export class ProductDetailsPageComponent {
     );
     await this.saveAudit(auditAction, `${this.form.name} marked as ${status}.`);
     this.message = `Product ${status.toLowerCase()}.`;
+    this.toastService.show(`Product "${this.form.name}" ${status.toLowerCase()} successfully.`);
     await this.loadData();
   }
 

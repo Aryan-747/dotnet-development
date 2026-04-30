@@ -1,5 +1,5 @@
-<div class="auth-page">
-  <div class="auth-card">
+<div class="auth-page auth-surface-page">
+  <div class="auth-card auth-card-modern">
     <div class="auth-copy">
       <h1 style="color: white">Sign In To The Product Management Portal</h1>
       <p>
@@ -8,7 +8,7 @@
       </p>
     </div>
 
-    <form class="auth-form" (ngSubmit)="onSubmit()">
+    <form class="auth-form auth-form-modern" (ngSubmit)="onSubmit()">
       <label>
         Email
         <input [(ngModel)]="form.email" name="email" type="email" required />
@@ -23,7 +23,7 @@
         <p class="banner error">{{ error }}</p>
       }
 
-      <button type="submit" [disabled]="submitting">
+      <button type="submit" class="action-button action-button-neutral" [disabled]="submitting">
         {{ submitting ? 'Signing in...' : 'Login' }}
       </button>
 

@@ -45,4 +45,8 @@ export class CatalogService {
   getAdminProducts() {
     return this.http.get<Product[]>('/catalog/products');
   }
+
+  deleteAdminProduct(id: string) {
+    return this.http.delete<void>(`/catalog/products/${id}`);
+  }
 }
