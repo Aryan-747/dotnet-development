@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using System.Text;
 using Serilog;
+using MassTransit;
+using CatalogService.Consumers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
+// RabbitMQ MassTransit
+builder.Services.AddMassTransit(x =>
+{
+    // Register the consumer
+    x.AddConsumer<ProductPublishedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h => {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        // Configure the queue
+        cfg.ReceiveEndpoint("catalog-product-published-queue", e =>
+        {
+            e.ConfigureConsumer<ProductPublishedConsumer>(context);
+        });
+    });
+});
 
 // ✅ Add services
 builder.Services.AddScoped<ActionLoggingFilter>();

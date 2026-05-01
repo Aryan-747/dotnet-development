@@ -4,6 +4,8 @@ using ProductWorkflowService.Data;
 using ProductWorkflowService.DTOs;
 using ProductWorkflowService.Models;
 using System.Security.Claims;
+using MassTransit;
+using ECommerce.Shared.Events;
 
 namespace ProductWorkflowService.Controllers
 {
@@ -12,10 +14,12 @@ namespace ProductWorkflowService.Controllers
     public class WorkflowController : ControllerBase
     {
         private readonly WorkflowDbContext _context;
+        private readonly IPublishEndpoint _publishEndpoint;
 
-        public WorkflowController(WorkflowDbContext context)
+        public WorkflowController(WorkflowDbContext context, IPublishEndpoint publishEndpoint)
         {
             _context = context;
+            _publishEndpoint = publishEndpoint;
         }
 
         [Authorize]
@@ -203,6 +207,19 @@ namespace ProductWorkflowService.Controllers
             approval.UpdatedAt = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
+
+            // Fetch the price to include in the event
+            var price = _context.Prices.FirstOrDefault(x => x.ProductId == productId);
+
+            // Publish event to RabbitMQ
+            await _publishEndpoint.Publish(new ProductPublishedEvent
+            {
+                ProductId = productId,
+                Sku = "UNKNOWN", // Default or fetch from catalog
+                SalePrice = price?.SellingPrice ?? 0,
+                PublishedAt = DateTime.UtcNow
+            });
+
             return Ok(approval);
         }
 

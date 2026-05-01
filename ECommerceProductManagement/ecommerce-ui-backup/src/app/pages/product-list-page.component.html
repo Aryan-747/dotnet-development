@@ -1,0 +1,70 @@
+<div class="page page-spacious admin-surface-page">
+  <section class="hero compact console-header-card">
+    <div>
+      <p class="eyebrow">Admin Product Management</p>
+      <h1>Catalog operations workspace</h1>
+      <p>
+        Create products, enrich metadata, and move items into pricing, inventory, and
+        approval stages.
+      </p>
+    </div>
+  </section>
+
+  <div class="split-grid admin-product-layout">
+    <section class="card console-panel console-form-panel">
+      <div class="section-header admin-section-header">
+        <div>
+          <p class="eyebrow">Create product</p>
+          <h2>New onboarding entry</h2>
+        </div>
+      </div>
+
+      <form class="form-grid admin-form-grid" (ngSubmit)="onCreate()">
+        <label>Product name<input [(ngModel)]="form.name" name="name" required /></label>
+        <label>SKU<input [(ngModel)]="form.sku" name="sku" required /></label>
+        <label>Brand<input [(ngModel)]="form.brand" name="brand" /></label>
+        <label>Category<input [(ngModel)]="form.categoryName" name="categoryName" /></label>
+        <label class="full-span">
+          Description
+          <textarea [(ngModel)]="form.description" name="description" rows="4"></textarea>
+        </label>
+        <label>Primary image URL<input [(ngModel)]="form.primaryImageUrl" name="primaryImageUrl" /></label>
+        <label>Tags<input [(ngModel)]="form.tags" name="tags" /></label>
+        <label>SEO title<input [(ngModel)]="form.seoTitle" name="seoTitle" /></label>
+        <label>SEO description<input [(ngModel)]="form.seoDescription" name="seoDescription" /></label>
+        <label>
+          Selling price
+          <input [(ngModel)]="form.sellingPrice" name="sellingPrice" type="number" min="0" step="0.01" />
+        </label>
+        <label>
+          Opening stock
+          <input [(ngModel)]="form.stockQuantity" name="stockQuantity" type="number" min="0" />
+        </label>
+
+        @if (error) {
+          <p class="banner error full-span">{{ error }}</p>
+        }
+
+        <button class="full-span action-button action-button-neutral" type="submit" [disabled]="saving">
+          {{ saving ? 'Creating...' : 'Create as ' + (user()?.role || '') }}
+        </button>
+      </form>
+    </section>
+
+    <section class="card console-panel">
+      <div class="section-header admin-section-header">
+        <div>
+          <p class="eyebrow">Product list</p>
+          <h2>Existing catalog</h2>
+        </div>
+        <input class="inline-search" [ngModel]="query()" (ngModelChange)="query.set($event)" placeholder="Search products" />
+      </div>
+
+      <div class="card-grid">
+        @for (product of filteredProducts(); track product.id) {
+          <app-product-card [product]="product"></app-product-card>
+        }
+      </div>
+    </section>
+  </div>
+</div>

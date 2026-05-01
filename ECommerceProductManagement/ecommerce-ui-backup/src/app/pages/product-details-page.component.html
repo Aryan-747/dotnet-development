@@ -1,0 +1,98 @@
+@if (!product() || !form) {
+  <div class="screen-message">Loading product details...</div>
+} @else {
+  <div [class]="mode() === 'customer' ? 'marketplace-page' : 'page page-spacious admin-product-page'">
+    <div [class]="mode() === 'customer' ? 'section-header' : 'section-header admin-page-header'">
+      <div>
+        <p class="eyebrow">{{ mode() === 'customer' ? 'Product Details Preview' : 'Product Details Edit' }}</p>
+        <h1>{{ product()!.name }}</h1>
+      </div>
+      <div class="pill-row">
+        <span class="pill">{{ product()!.categoryName }}</span>
+        <span [class]="statusClass">{{ statusLabel }}</span>
+      </div>
+      <span class="status-meta">{{ statusTimestamp }}</span>
+    </div>
+
+    @if (message) {
+      <p class="banner success">{{ message }}</p>
+    }
+
+    <div [class]="mode() === 'customer' ? 'product-detail-shell' : 'split-grid admin-product-layout'">
+      <section [class]="mode() === 'customer' ? 'card media-card customer-gallery' : 'card media-card admin-media-card'">
+        <img [src]="form.primaryImageUrl" [alt]="product()!.name" class="detail-image" />
+        @if (mode() === 'customer') {
+          <p class="muted">Roll over the image area mentally as a customer would in a storefront PDP.</p>
+        }
+      </section>
+
+      <section [class]="mode() === 'customer' ? 'card customer-copy-card' : 'card admin-editor-card'">
+        @if (mode() === 'customer') {
+          <div class="customer-buy-box">
+            <p class="muted">Brand: {{ product()!.brand }}</p>
+            <h2>{{ product()!.name }}</h2>
+            <div class="rating-row">
+              <span class="rating-score">4.4</span>
+              <span class="rating-stars">★★★★★</span>
+              <span class="muted">1,248 ratings</span>
+            </div>
+            <p class="price-large">Rs. {{ form.sellingPrice || 0 | number: '1.0-0' }}</p>
+            <p [class]="product()!.stockQuantity > 0 ? 'stock-good' : 'stock-low'">
+              {{ product()!.stockQuantity > 0 ? 'In Stock' : 'Out of Stock' }}
+            </p>
+            <p>{{ form.description }}</p>
+            <div class="buy-box-actions">
+              <button type="button" [disabled]="!isCustomer()" (click)="addToCart()">Add to preview cart</button>
+              <button class="ghost-link" type="button">Buy now preview</button>
+            </div>
+            @if (!isAuthenticated()) {
+              <p class="muted">Sign in with a customer account to use cart features.</p>
+            } @else if (!isCustomer()) {
+              <p class="muted">Cart features are available only for customer accounts.</p>
+            }
+          </div>
+        } @else {
+          <div class="form-grid admin-form-grid">
+            <label>Name<input [(ngModel)]="form.name" [disabled]="!canEdit()" name="name" /></label>
+            <label>SKU<input [(ngModel)]="form.sku" [disabled]="!canEdit()" name="sku" /></label>
+            <label>Brand<input [(ngModel)]="form.brand" [disabled]="!canEdit()" name="brand" /></label>
+            <label>Category<input [(ngModel)]="form.categoryName" [disabled]="!canEdit()" name="categoryName" /></label>
+            <label class="full-span">Description<textarea [(ngModel)]="form.description" [disabled]="!canEdit()" rows="4" name="description"></textarea></label>
+            <label>Image URL<input [(ngModel)]="form.primaryImageUrl" [disabled]="!canEdit()" name="primaryImageUrl" /></label>
+            <label>Tags<input [(ngModel)]="form.tags" [disabled]="!canEdit()" name="tags" /></label>
+            <label>Selling price<input [(ngModel)]="form.sellingPrice" [disabled]="!canEdit()" type="number" min="0" step="0.01" name="sellingPrice" /></label>
+            <label>Stock quantity<input [(ngModel)]="form.stockQuantity" [disabled]="!canEdit()" type="number" min="0" name="stockQuantity" /></label>
+          </div>
+
+          <div class="action-row admin-action-row">
+            <button type="button" class="action-button action-button-neutral" (click)="saveProduct()">Save basic details</button>
+            @if (canSubmitForReview()) {
+              <button type="button" class="action-button action-button-review" (click)="submitForReview()">Submit for review</button>
+            }
+            @if (isAdmin()) {
+              <button type="button" class="action-button action-button-approve" (click)="reviewAction('approve', 'Approved', 'Approved')">Approve</button>
+              <button type="button" class="action-button action-button-reject" (click)="reviewAction('reject', 'Rejected', 'Rejected')">Reject</button>
+              <button type="button" class="action-button action-button-publish" (click)="reviewAction('publish', 'Published', 'Published')">Publish</button>
+            }
+            @if (canDelete()) {
+              <button type="button" class="action-button action-button-delete" (click)="deleteProduct()">Delete product</button>
+            }
+          </div>
+        }
+      </section>
+    </div>
+
+    @if (isAuthenticated()) {
+      <section [class]="mode() === 'customer' ? 'card' : 'card admin-workflow-card'">
+        <div [class]="mode() === 'customer' ? 'section-header' : 'section-header admin-section-header'">
+          <div><p class="eyebrow">Workflow snapshot</p><h2>Pricing, inventory, and approval</h2></div>
+        </div>
+        <div [class]="mode() === 'customer' ? 'metric-grid' : 'metric-grid admin-workflow-grid'">
+          <article class="metric-card card"><span>Pricing</span><strong>{{ workflow().price ? ('Rs. ' + workflow().price!.sellingPrice) : 'Not saved' }}</strong></article>
+          <article class="metric-card card"><span>Inventory</span><strong>{{ workflow().inventory ? workflow().inventory!.quantity : 'Not saved' }}</strong></article>
+          <article class="metric-card card"><span>Approval</span><strong>{{ workflow().approval?.status || 'Not submitted' }}</strong></article>
+        </div>
+      </section>
+    }
+  </div>
+}

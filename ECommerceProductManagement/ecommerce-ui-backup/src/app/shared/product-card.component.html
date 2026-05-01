@@ -1,0 +1,42 @@
+<article
+  [class]="mode === 'customer' ? 'product-card marketplace-card' : 'card product-card'"
+  (click)="open()"
+>
+  <div class="product-image-shell">
+    <img [src]="product.primaryImageUrl" [alt]="product.name" class="product-image" />
+    @if (mode === 'customer') {
+      <span class="deal-badge">Limited time deal</span>
+    }
+  </div>
+
+  <div class="product-copy">
+    <div class="pill-row">
+      <span class="pill">{{ product.categoryName || 'General' }}</span>
+      <span [class]="statusClass">
+        {{ statusLabel }}
+      </span>
+    </div>
+    <span class="status-meta">{{ statusTimestamp }}</span>
+
+    <h3 class="product-title">{{ product.name }}</h3>
+    <p class="muted product-brand">{{ product.brand }}</p>
+
+    @if (mode === 'customer') {
+      <div class="rating-row">
+        <span class="rating-score">{{ rating }}</span>
+        <span class="rating-stars">★★★★★</span>
+        <span class="muted">({{ reviewCount }})</span>
+      </div>
+    }
+
+    <p class="price">Rs. {{ product.sellingPrice || 0 | number: '1.0-0' }}</p>
+    <p class="muted">SKU: {{ product.sku }}</p>
+    <p [class]="product.stockQuantity > 0 ? 'stock-good' : 'stock-low'">
+      {{
+        product.stockQuantity > 0
+          ? 'In stock: ' + product.stockQuantity + ' units'
+          : 'Currently unavailable'
+      }}
+    </p>
+  </div>
+</article>

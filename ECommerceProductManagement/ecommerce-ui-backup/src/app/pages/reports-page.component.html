@@ -1,0 +1,81 @@
+<div class="page page-spacious admin-surface-page">
+  <section class="reports-hero console-hero">
+    <div class="reports-hero-main console-hero-main">
+      <p class="eyebrow">Admin Reports</p>
+      <h1>Audit history and exports</h1>
+      <p>
+        Review product-level activity, inspect approval transitions, and export structured
+        audit history from one reporting workspace.
+      </p>
+      <div class="dashboard-hero-tags">
+        <span>Audit visibility</span>
+        <span>Export-ready</span>
+        <span>Product timeline</span>
+      </div>
+    </div>
+
+    <div class="reports-hero-side console-hero-side">
+      <p class="eyebrow">Reporting snapshot</p>
+      <h2>{{ logs().length }} timeline events</h2>
+      <p class="muted">Focused on the currently selected product record.</p>
+    </div>
+  </section>
+
+  @if (dashboard()) {
+    <section class="dashboard-metrics reports-metrics console-metrics">
+      <article class="dashboard-metric-card accent-blue">
+        <p>Total activity</p>
+        <strong>{{ dashboard()!.totalActivities }}</strong>
+        <span>All audit entries captured</span>
+      </article>
+      <article class="dashboard-metric-card accent-green">
+        <p>Audits today</p>
+        <strong>{{ dashboard()!.auditsToday }}</strong>
+        <span>Entries recorded in the current day</span>
+      </article>
+      <article class="dashboard-metric-card accent-amber">
+        <p>Pending alerts</p>
+        <strong>{{ dashboard()!.pendingAlerts }}</strong>
+        <span>Signals that may require action</span>
+      </article>
+    </section>
+  }
+
+  <section class="card reports-panel console-panel">
+    <div class="section-header reports-panel-header">
+      <div class="reports-heading">
+        <p class="eyebrow">Order History Product Audit</p>
+        <h2>Timeline explorer</h2>
+        <p class="muted">Select a product to inspect its full operational trail.</p>
+      </div>
+
+      <div class="reports-toolbar">
+        <select [(ngModel)]="selectedProductId" (ngModelChange)="onProductChange()">
+          @for (product of products(); track product.id) {
+            <option [value]="product.id">{{ product.name }}</option>
+          }
+        </select>
+        <button type="button" (click)="exportAudit()">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="stack reports-timeline">
+      @if (logs().length === 0) {
+        <div class="empty-panel">
+          <p>No audit activity found for the selected product yet.</p>
+        </div>
+      }
+
+      @for (log of logs(); track log.id) {
+        <article class="dashboard-timeline-item reports-timeline-item">
+          <div class="dashboard-timeline-top">
+            <span [class]="statusClass(log.action)">{{ statusLabel(log.action) }}</span>
+            <span class="muted">{{ formatTimestamp(log.createdAt) }}</span>
+          </div>
+          <p>{{ log.details }}</p>
+          <span class="muted">{{ log.actorEmail }}</span>
+        </article>
+      }
+    </div>
+  </section>
+</div>

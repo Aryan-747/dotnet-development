@@ -7,6 +7,7 @@ using ProductWorkflowService.Services;
 using System.Text;
 using Microsoft.OpenApi;
 using Serilog;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,19 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
+// RabbitMQ Masstransit
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h => {
+            h.Username("guest");
+            h.Password("guest");
+        });
+    });
+});
+
 
 // Controllers
 builder.Services.AddScoped<ActionLoggingFilter>();
