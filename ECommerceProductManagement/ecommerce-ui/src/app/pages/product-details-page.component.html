@@ -9,9 +9,13 @@
       </div>
       <div class="pill-row">
         <span class="pill">{{ product()!.categoryName }}</span>
-        <span [class]="statusClass">{{ statusLabel }}</span>
+        @if (mode() !== 'customer') {
+          <span [class]="statusClass">{{ statusLabel }}</span>
+        }
       </div>
-      <span class="status-meta">{{ statusTimestamp }}</span>
+      @if (mode() !== 'customer') {
+        <span class="status-meta">{{ statusTimestamp }}</span>
+      }
     </div>
 
     @if (message) {

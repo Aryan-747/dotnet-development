@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, AfterViewInit, NgZone } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
@@ -29,7 +29,8 @@ export class LoginPageComponent implements AfterViewInit {
   constructor(
     private readonly http: HttpClient,
     private readonly authService: AuthService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly zone: NgZone
   ) {}
 
   ngAfterViewInit(): void {
@@ -63,21 +64,23 @@ export class LoginPageComponent implements AfterViewInit {
 
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
-        callback: async (response: { credential: string }) => {
-          this.error = '';
-          this.submitting = true;
+        callback: (response: { credential: string }) => {
+          this.zone.run(async () => {
+            this.error = '';
+            this.submitting = true;
 
-          try {
-            const data = await firstValueFrom(
-              this.http.post<AuthResponse>('/auth/google', { idToken: response.credential })
-            );
-            this.authService.login(data);
-            await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
-          } catch (error: any) {
-            this.error = error?.error || 'Google sign-in failed.';
-          } finally {
-            this.submitting = false;
-          }
+            try {
+              const data = await firstValueFrom(
+                this.http.post<AuthResponse>('/auth/google', { idToken: response.credential })
+              );
+              this.authService.login(data);
+              await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+            } catch (error: any) {
+              this.error = error?.error || 'Google sign-in failed.';
+            } finally {
+              this.submitting = false;
+            }
+          });
         },
       });
 

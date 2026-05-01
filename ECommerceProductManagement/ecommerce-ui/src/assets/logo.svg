@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" role="img" aria-label="ShopSphere logo">
   <defs>
     <linearGradient id="brandGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffb347" />
-      <stop offset="100%" stop-color="#ff6f3c" />
+      <stop offset="0%" stop-color="#00e8bf" />
+      <stop offset="100%" stop-color="#00c9a7" />
     </linearGradient>
     <linearGradient id="glowGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-      <stop offset="0%" stop-color="#22c1c3" />
-      <stop offset="100%" stop-color="#fdbb2d" />
+      <stop offset="0%" stop-color="#34d399" />
+      <stop offset="100%" stop-color="#00c9a7" />
     </linearGradient>
     <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
@@ -23,5 +23,5 @@
     <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="url(#glowGrad)">Shop</text>
     <text x="0" y="34" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="url(#glowGrad)">Sphere</text>
   </g>
-  <path d="M108 23c14 0 25 11.4 25 25.4S122 74 108 74" fill="none" stroke="#ffb347" stroke-width="4" opacity="0.45" />
+  <path d="M108 23c14 0 25 11.4 25 25.4S122 74 108 74" fill="none" stroke="#00c9a7" stroke-width="4" opacity="0.45" />
 </svg>
