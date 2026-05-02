@@ -24,12 +24,46 @@ export class SignupPageComponent {
 
   constructor(private readonly http: HttpClient, private readonly router: Router) {}
 
-  protected async onSubmit(): Promise<void> {
+  private validateForm(): boolean {
     this.error = '';
-    this.message = '';
+
+    if (!this.form.name || this.form.name.trim().length < 2) {
+      this.error = 'Please enter a valid full name (minimum 2 characters).';
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.form.email)) {
+      this.error = 'Please enter a valid email address.';
+      return false;
+    }
+
+    if (this.form.password.length < 8) {
+      this.error = 'Password must be at least 8 characters long.';
+      return false;
+    }
+
+    const hasLetter = /[a-zA-Z]/.test(this.form.password);
+    const hasNumber = /\d/.test(this.form.password);
+    const hasSpecial = /[\W_]/.test(this.form.password);
+
+    if (!hasLetter || !hasNumber || !hasSpecial) {
+      this.error = 'Password must contain at least one letter, one number, and one special character.';
+      return false;
+    }
 
     if (this.form.password !== this.form.confirmPassword) {
-      this.error = 'Password and confirm password must match.';
+      this.error = 'Passwords do not match.';
+      return false;
+    }
+
+    return true;
+  }
+
+  protected async onSubmit(): Promise<void> {
+    this.message = '';
+    
+    if (!this.validateForm()) {
       return;
     }
 

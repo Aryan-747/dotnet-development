@@ -6,8 +6,10 @@ export interface UserProfile {
 }
 
 export interface AuthResponse {
-  token: string;
-  user: UserProfile;
+  token?: string;
+  user?: UserProfile;
+  requiresOtp?: boolean;
+  email?: string;
 }
 
 export interface Product {

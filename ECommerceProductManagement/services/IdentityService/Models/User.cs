@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Models;
+namespace IdentityService.Models;
 
 public class User
 {
@@ -12,4 +12,7 @@ public class User
 
     public string? GoogleSubjectId { get; set; }
     public string AuthProvider { get; set; } = "Local";
+
+    public string? OtpCode { get; set; }
+    public DateTime? OtpExpiry { get; set; }
 }

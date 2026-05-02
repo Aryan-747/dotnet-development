@@ -72,7 +72,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public IActionResult Login(LoginDto dto)
+    public async Task<IActionResult> Login(LoginDto dto)
     {
         var user = _context.Users
             .FirstOrDefault(x => x.Email == dto.Email && x.PasswordHash == dto.Password);
@@ -81,6 +81,41 @@ public class AuthController : ControllerBase
         {
             return Unauthorized();
         }
+
+        // Generate 6 digit OTP
+        var random = new Random();
+        var otp = random.Next(100000, 999999).ToString();
+        
+        user.OtpCode = otp;
+        user.OtpExpiry = DateTime.UtcNow.AddMinutes(5);
+        
+        await _context.SaveChangesAsync();
+
+        // Normally we would send this via email. Logging to console for dev.
+        Console.WriteLine($"\n=== OTP for {user.Email} is {otp} ===\n");
+
+        return Ok(new AuthResponseDto
+        {
+            RequiresOtp = true,
+            Email = user.Email
+        });
+    }
+
+    [HttpPost("verify-otp")]
+    public async Task<IActionResult> VerifyOtp(VerifyOtpDto dto)
+    {
+        var user = _context.Users
+            .FirstOrDefault(x => x.Email == dto.Email && x.OtpCode == dto.OtpCode);
+
+        if (user == null || user.OtpExpiry < DateTime.UtcNow)
+        {
+            return Unauthorized("Invalid or expired OTP.");
+        }
+
+        // Clear OTP
+        user.OtpCode = null;
+        user.OtpExpiry = null;
+        await _context.SaveChangesAsync();
 
         return Ok(new AuthResponseDto
         {

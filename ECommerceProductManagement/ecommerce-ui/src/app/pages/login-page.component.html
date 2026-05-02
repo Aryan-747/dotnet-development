@@ -18,50 +18,71 @@
         <p class="muted">Sign in to continue to the management console</p>
       </div>
 
-      <label class="field">
-        <span class="label-text">Email</span>
-        <input
-          [(ngModel)]="form.email"
-          name="email"
-          type="email"
-          required
-          placeholder="you@company.com"
-          autocomplete="username"
-        />
-      </label>
-
-      <label class="field">
-        <span class="label-text">Password</span>
-        <input
-          [(ngModel)]="form.password"
-          name="password"
-          type="password"
-          required
-          placeholder="••••••••"
-          autocomplete="current-password"
-        />
-      </label>
-
-      <div class="form-meta">
-        <label class="remember">
-          <input type="checkbox" /> Remember me
+      @if (!requiresOtp) {
+        <label class="field">
+          <span class="label-text">Email</span>
+          <input
+            [(ngModel)]="form.email"
+            name="email"
+            type="email"
+            required
+            placeholder="you@company.com"
+            autocomplete="username"
+          />
         </label>
-        <a class="muted" routerLink="/auth/forgot">Forgot?</a>
-      </div>
+
+        <label class="field">
+          <span class="label-text">Password</span>
+          <input
+            [(ngModel)]="form.password"
+            name="password"
+            type="password"
+            required
+            placeholder="••••••••"
+            autocomplete="current-password"
+          />
+        </label>
+
+        <div class="form-meta">
+          <label class="remember">
+            <input type="checkbox" /> Remember me
+          </label>
+          <a class="muted" routerLink="/auth/forgot">Forgot?</a>
+        </div>
+      } @else {
+        <label class="field">
+          <span class="label-text">Verification Code</span>
+          <input
+            [(ngModel)]="otpCode"
+            name="otpCode"
+            type="text"
+            required
+            placeholder="6-digit code"
+            autocomplete="one-time-code"
+          />
+        </label>
+        <p class="muted" style="font-size: 13px; margin: 0 0 10px;">Please enter the OTP sent to your email. Check your terminal output for the OTP.</p>
+      }
 
       @if (error) {
         <p class="banner error">{{ error }}</p>
       }
 
       <button type="submit" class="action-button action-button-primary" [disabled]="submitting">
-        {{ submitting ? 'Signing in...' : 'Sign in' }}
+        @if (requiresOtp) {
+          {{ submitting ? 'Verifying...' : 'Verify OTP' }}
+        } @else {
+          {{ submitting ? 'Signing in...' : 'Sign in' }}
+        }
       </button>
 
-      <div class="divider"><span>or continue with</span></div>
+      @if (!requiresOtp) {
+        <div class="divider"><span>or continue with</span></div>
 
-      <div class="socials">
-        <div #googleButtonRef class="google-btn"></div>
-      </div>
+        <div class="socials">
+          <div #googleButtonRef class="google-btn"></div>
+        </div>
+      }
 
       <p class="muted footnote">
         Need a new account? <a routerLink="/auth/signup">Create one</a>

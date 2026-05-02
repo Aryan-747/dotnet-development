@@ -23,6 +23,8 @@ export class LoginPageComponent implements AfterViewInit {
   @ViewChild('googleButtonRef', { static: false }) googleButtonRef?: ElementRef<HTMLDivElement>;
 
   protected form = { email: '', password: '' };
+  protected otpCode = '';
+  protected requiresOtp = false;
   protected error = '';
   protected submitting = false;
 
@@ -42,11 +44,30 @@ export class LoginPageComponent implements AfterViewInit {
     this.submitting = true;
 
     try {
-      const data = await firstValueFrom(this.http.post<AuthResponse>('/auth/login', this.form));
-      this.authService.login(data);
-      await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+      if (this.requiresOtp) {
+        const data = await firstValueFrom(this.http.post<AuthResponse>('/auth/verify-otp', {
+          email: this.form.email,
+          otpCode: this.otpCode
+        }));
+        
+        if (data.token && data.user) {
+          this.authService.login({ token: data.token, user: data.user });
+          await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+        }
+      } else {
+        const data = await firstValueFrom(this.http.post<AuthResponse>('/auth/login', this.form));
+        
+        if (data.requiresOtp) {
+           this.requiresOtp = true;
+           this.error = ''; // Clear error on step transition
+           // Note: check the console for the OTP if not using a real email sender
+        } else if (data.token && data.user) {
+          this.authService.login({ token: data.token, user: data.user });
+          await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+        }
+      }
     } catch {
-      this.error = 'Invalid email or password.';
+      this.error = this.requiresOtp ? 'Invalid or expired OTP.' : 'Invalid email or password.';
     } finally {
       this.submitting = false;
     }
@@ -73,8 +94,10 @@ export class LoginPageComponent implements AfterViewInit {
               const data = await firstValueFrom(
                 this.http.post<AuthResponse>('/auth/google', { idToken: response.credential })
               );
-              this.authService.login(data);
-              await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+              if (data.token && data.user) {
+                this.authService.login({ token: data.token, user: data.user });
+                await this.router.navigate([data.user.role === 'Admin' ? '/admin/dashboard' : '/admin/products']);
+              }
             } catch (error: any) {
               this.error = error?.error || 'Google sign-in failed.';
             } finally {

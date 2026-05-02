@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  login(payload: AuthResponse): void {
+  login(payload: { token: string; user: UserProfile }): void {
     this.setSession(payload);
   }
 
