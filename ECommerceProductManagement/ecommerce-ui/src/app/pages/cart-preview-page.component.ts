@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 
@@ -13,14 +13,20 @@ export class CartPreviewPageComponent {
   protected readonly items = this.cartService.items;
   protected readonly totalItems = this.cartService.totalItems;
   protected readonly totalPrice = this.cartService.totalPrice;
-  protected readonly estimatedTax = computed(() => Math.round(this.totalPrice() * 0.18));
-  protected readonly grandTotal = computed(() => this.totalPrice() + this.estimatedTax());
+  protected readonly estimatedTax = this.cartService.estimatedTax;
+  protected readonly grandTotal = this.cartService.grandTotal;
   protected readonly isCustomer = computed(() => this.authService.user()?.role === 'Customer');
 
   constructor(
     private readonly cartService: CartService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
+
+  protected checkout(): void {
+    if (!this.isCustomer()) return;
+    this.router.navigate(['/customer/checkout']);
+  }
 
   protected addItem(item: any): void {
     if (!this.isCustomer()) {

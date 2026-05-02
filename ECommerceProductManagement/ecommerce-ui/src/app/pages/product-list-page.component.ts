@@ -34,6 +34,7 @@ export class ProductListPageComponent {
   protected readonly query = signal('');
   protected form = { ...emptyProduct };
   protected error = '';
+  protected showAddAddress = false;
   protected saving = false;
   protected readonly user = this.authService.user;
   protected readonly filteredProducts = computed(() => {
@@ -49,11 +50,21 @@ export class ProductListPageComponent {
     );
   });
 
+  protected readonly stats = computed(() => {
+    const products = this.products();
+    return {
+      totalItems: products.length,
+      totalStock: products.reduce((acc, p) => acc + p.stockQuantity, 0),
+      totalValue: products.reduce((acc, p) => acc + (p.sellingPrice * p.stockQuantity), 0),
+      lowStockCount: products.filter(p => p.stockQuantity < 10).length
+    };
+  });
+
   constructor(
     private readonly catalogService: CatalogService,
     private readonly http: HttpClient,
     private readonly authService: AuthService,
-    private readonly router: Router,
+    protected readonly router: Router,
     private readonly toastService: ToastService
   ) {
     void this.loadProducts();

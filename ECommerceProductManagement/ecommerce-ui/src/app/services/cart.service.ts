@@ -16,6 +16,8 @@ export class CartService {
       0
     )
   );
+  readonly estimatedTax = computed(() => Math.round(this.totalPrice() * 0.18));
+  readonly grandTotal = computed(() => this.totalPrice() + this.estimatedTax());
 
   constructor() {
     window.addEventListener('storage', () => this.itemsSignal.set(this.readCart()));

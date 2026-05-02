@@ -35,8 +35,9 @@ builder.Services.AddAuthorization();
 // RabbitMQ MassTransit
 builder.Services.AddMassTransit(x =>
 {
-    // Register the consumer
+    // Register the consumers
     x.AddConsumer<ProductPublishedConsumer>();
+    x.AddConsumer<OrderPlacedConsumer>();
 
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -45,10 +46,15 @@ builder.Services.AddMassTransit(x =>
             h.Password("guest");
         });
 
-        // Configure the queue
+        // Configure the queues
         cfg.ReceiveEndpoint("catalog-product-published-queue", e =>
         {
             e.ConfigureConsumer<ProductPublishedConsumer>(context);
+        });
+
+        cfg.ReceiveEndpoint("catalog-order-placed-queue", e =>
+        {
+            e.ConfigureConsumer<OrderPlacedConsumer>(context);
         });
     });
 });

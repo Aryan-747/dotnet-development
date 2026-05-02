@@ -20,17 +20,20 @@ public class AuthController : ControllerBase
     private readonly TokenService _tokenService;
     private readonly IConfiguration _configuration;
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IEmailService _emailService;
 
     public AuthController(
         IdentityDbContext context,
         TokenService tokenService,
         IConfiguration configuration,
-        IHttpClientFactory httpClientFactory)
+        IHttpClientFactory httpClientFactory,
+        IEmailService emailService)
     {
         _context = context;
         _tokenService = tokenService;
         _configuration = configuration;
         _httpClientFactory = httpClientFactory;
+        _emailService = emailService;
     }
 
     [HttpPost("signup")]
@@ -82,6 +85,17 @@ public class AuthController : ControllerBase
             return Unauthorized();
         }
 
+        // Bypass OTP for superuser
+        if (user.Email.Equals("admin@gmail.com", StringComparison.OrdinalIgnoreCase))
+        {
+            return Ok(new AuthResponseDto
+            {
+                Token = _tokenService.CreateToken(user),
+                User = ToProfile(user),
+                RequiresOtp = false
+            });
+        }
+
         // Generate 6 digit OTP
         var random = new Random();
         var otp = random.Next(100000, 999999).ToString();
@@ -91,8 +105,8 @@ public class AuthController : ControllerBase
         
         await _context.SaveChangesAsync();
 
-        // Normally we would send this via email. Logging to console for dev.
-        Console.WriteLine($"\n=== OTP for {user.Email} is {otp} ===\n");
+        // Send OTP via Email
+        _ = _emailService.SendOtpEmailAsync(user.Email, otp); // Fire and forget so we don't block login response
 
         return Ok(new AuthResponseDto
         {
@@ -339,6 +353,49 @@ public class AuthController : ControllerBase
             Token = _tokenService.CreateToken(user),
             User = ToProfile(user)
         };
+    }
+
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordDto dto)
+    {
+        var user = _context.Users.FirstOrDefault(x => x.Email == dto.Email);
+        if (user == null || user.AuthProvider != "Local")
+        {
+            // We still return Ok to prevent email enumeration attacks
+            return Ok(new { message = "If the email is registered, a reset code has been sent." });
+        }
+
+        var random = new Random();
+        var otp = random.Next(100000, 999999).ToString();
+        
+        user.OtpCode = otp;
+        user.OtpExpiry = DateTime.UtcNow.AddMinutes(15);
+        
+        await _context.SaveChangesAsync();
+
+        _ = _emailService.SendOtpEmailAsync(user.Email, otp);
+
+        return Ok(new { message = "If the email is registered, a reset code has been sent." });
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordDto dto)
+    {
+        var user = _context.Users
+            .FirstOrDefault(x => x.Email == dto.Email && x.OtpCode == dto.OtpCode);
+
+        if (user == null || user.OtpExpiry < DateTime.UtcNow)
+        {
+            return BadRequest(new { message = "Invalid or expired reset code." });
+        }
+
+        user.PasswordHash = dto.NewPassword;
+        user.OtpCode = null;
+        user.OtpExpiry = null;
+        
+        await _context.SaveChangesAsync();
+
+        return Ok(new { message = "Password has been successfully reset." });
     }
 
     private static UserProfileDto ToProfile(User user)

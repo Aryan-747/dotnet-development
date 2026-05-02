@@ -25,6 +25,7 @@
           <span class="cart-count">{{ totalItems() }}</span>
         }
       </a>
+      <a routerLink="/customer/orders" routerLinkActive="active">My Orders</a>
     }
 
     @if (isAuthenticated()) {
@@ -33,6 +34,7 @@
       }
       @if (user()?.role === 'Admin') {
         <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/admin/orders" routerLinkActive="active">Orders</a>
         <a routerLink="/admin/workflow" routerLinkActive="active">Workflow</a>
         <a routerLink="/admin/reports" routerLinkActive="active">Reports</a>
       }
@@ -72,6 +74,6 @@
     <a routerLink="/customer/products" [queryParams]="{ category: 'Fashion' }">Fashion</a>
     <a routerLink="/customer/products" [queryParams]="{ category: 'Kitchen' }">Home &amp; Kitchen</a>
     <a routerLink="/customer/products" [queryParams]="{ category: 'Fitness' }">Fitness</a>
-    <a routerLink="/customer/products" [queryParams]="{ q: 'featured' }">Prime Preview</a>
+    <a routerLink="/customer/products" [queryParams]="{ q: 'featured' }">ShopSphere Prime</a>
   </div>
 }

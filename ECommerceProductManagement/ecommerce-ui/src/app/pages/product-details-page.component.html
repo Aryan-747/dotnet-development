@@ -4,7 +4,7 @@
   <div [class]="mode() === 'customer' ? 'marketplace-page' : 'page page-spacious admin-product-page'">
     <div [class]="mode() === 'customer' ? 'section-header' : 'section-header admin-page-header'">
       <div>
-        <p class="eyebrow">{{ mode() === 'customer' ? 'Product Details Preview' : 'Product Details Edit' }}</p>
+        <p class="eyebrow">{{ mode() === 'customer' ? 'Product Details' : 'Product Details Edit' }}</p>
         <h1>{{ product()!.name }}</h1>
       </div>
       <div class="pill-row">
@@ -26,7 +26,7 @@
       <section [class]="mode() === 'customer' ? 'card media-card customer-gallery' : 'card media-card admin-media-card'">
         <img [src]="form.primaryImageUrl" [alt]="product()!.name" class="detail-image" />
         @if (mode() === 'customer') {
-          <p class="muted">Roll over the image area mentally as a customer would in a storefront PDP.</p>
+          <p class="muted">Explore high-quality images and details for this product below.</p>
         }
       </section>
 
@@ -46,8 +46,8 @@
             </p>
             <p>{{ form.description }}</p>
             <div class="buy-box-actions">
-              <button type="button" [disabled]="!isCustomer()" (click)="addToCart()">Add to preview cart</button>
-              <button class="ghost-link" type="button">Buy now preview</button>
+              <button type="button" [disabled]="!isCustomer()" (click)="addToCart()">Add to cart</button>
+              <button class="ghost-link" type="button">Buy now</button>
             </div>
             @if (!isAuthenticated()) {
               <p class="muted">Sign in with a customer account to use cart features.</p>

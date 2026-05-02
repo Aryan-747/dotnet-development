@@ -150,4 +150,19 @@ public class ProductController : ControllerBase
         await _repo.Delete(product);
         return NoContent();
     }
+
+    [Authorize(Roles = "Admin,ProductManager")]
+    [HttpPut("{id:guid}/reduce-stock")]
+    public async Task<IActionResult> ReduceStock(Guid id, [FromBody] int quantity)
+    {
+        var product = await _repo.GetById(id);
+        if (product == null) return NotFound();
+        
+        product.StockQuantity -= quantity;
+        if (product.StockQuantity < 0) product.StockQuantity = 0;
+        
+        product.UpdatedAt = DateTime.UtcNow;
+        await _repo.Update(product);
+        return Ok(product);
+    }
 }

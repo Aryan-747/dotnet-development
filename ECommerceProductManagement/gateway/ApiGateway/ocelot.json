@@ -54,6 +54,50 @@
           "Port": 5004
         }
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/orders/{everything}",
+      "UpstreamPathTemplate": "/gateway/orders/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/orders",
+      "UpstreamPathTemplate": "/gateway/orders",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/addresses/{everything}",
+      "UpstreamPathTemplate": "/gateway/addresses/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/addresses",
+      "UpstreamPathTemplate": "/gateway/addresses",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {

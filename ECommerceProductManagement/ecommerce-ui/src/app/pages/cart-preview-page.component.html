@@ -1,15 +1,15 @@
 <div class="page page-spacious storefront-surface-page">
   <div class="section-header console-header-card cart-page-header">
     <div>
-      <p class="eyebrow">Cart Storefront Preview</p>
+      <p class="eyebrow">Shopping Cart</p>
       <h1>Your shopping cart</h1>
-      <p class="muted">Review items, adjust quantities, and preview order value.</p>
+      <p class="muted">Review items, adjust quantities, and proceed to order.</p>
     </div>
   </div>
 
   @if (items().length === 0) {
     <div class="empty-panel console-panel">
-      <p>Your preview cart is empty.</p>
+      <p>Your cart is empty.</p>
       <a class="ghost-link" routerLink="/customer/products">Browse published products</a>
     </div>
   } @else {
@@ -63,7 +63,7 @@
           <span>Order total</span>
           <strong>Rs. {{ grandTotal() | number: '1.0-0' }}</strong>
         </div>
-        <button type="button">Proceed to checkout preview</button>
+        <button type="button" (click)="checkout()">Proceed to Checkout</button>
         <a class="ghost-link" routerLink="/customer/products">Continue shopping</a>
       </aside>
     </div>

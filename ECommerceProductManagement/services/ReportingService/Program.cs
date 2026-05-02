@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using MassTransit;
+using ReportingService.Consumers;
 using ReportingService.Data;
 using ReportingService.Filters;
 using ReportingService.Services;
@@ -9,6 +11,25 @@ using System.Text;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMassTransit(x =>
+{
+    x.AddConsumer<OrderPlacedConsumer>();
+
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("localhost", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ReceiveEndpoint("reporting-order-placed-queue", e =>
+        {
+            e.ConfigureConsumer<OrderPlacedConsumer>(context);
+        });
+    });
+});
 
 builder.Host.UseSerilog((context, services, configuration) => configuration
     .ReadFrom.Configuration(context.Configuration));

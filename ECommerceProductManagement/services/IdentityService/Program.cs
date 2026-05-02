@@ -46,6 +46,7 @@ builder.Services.AddDbContext<IdentityDbContext>(options =>
 // 🔹 Add Services
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddHttpClient();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 // 🔹 JWT Authentication
 var key = Encoding.UTF8.GetBytes("THIS_IS_A_SUPER_SECRET_KEY_123456789");

@@ -1,70 +1,131 @@
-<div class="page page-spacious admin-surface-page">
-  <section class="hero compact console-header-card">
-    <div>
-      <p class="eyebrow">Admin Product Management</p>
-      <h1>Catalog operations workspace</h1>
-      <p>
-        Create products, enrich metadata, and move items into pricing, inventory, and
-        approval stages.
-      </p>
+<div class="page" style="padding: 24px; min-height: calc(100vh - 66px);">
+  
+  <div class="warehouse-layout" style="display: grid; gap: 24px; max-width: 1400px; margin: 0 auto;">
+    
+    <!-- Dashboard Stats Grid -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+      
+      <div class="console-panel" style="padding: 24px; display: flex; align-items: center; gap: 20px;">
+        <div style="width: 48px; height: 48px; border-radius: var(--r-md); background: var(--brand-dim); color: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 20px;">📦</div>
+        <div>
+          <h2 style="margin: 0; font-size: 24px; color: var(--ink);">{{ stats().totalItems }}</h2>
+          <p class="muted" style="margin: 2px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Total Products</p>
+        </div>
+      </div>
+
+      <div class="console-panel" style="padding: 24px; display: flex; align-items: center; gap: 20px;">
+        <div style="width: 48px; height: 48px; border-radius: var(--r-md); background: var(--success-dim); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 20px;">📊</div>
+        <div>
+          <h2 style="margin: 0; font-size: 24px; color: var(--ink);">{{ stats().totalStock }}</h2>
+          <p class="muted" style="margin: 2px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Items in Stock</p>
+        </div>
+      </div>
+
+      <div class="console-panel" style="padding: 24px; display: flex; align-items: center; gap: 20px; border-color: var(--danger-dim);">
+        <div style="width: 48px; height: 48px; border-radius: var(--r-md); background: var(--danger-dim); color: var(--danger); display: flex; align-items: center; justify-content: center; font-size: 20px;">⚠️</div>
+        <div>
+          <h2 style="margin: 0; font-size: 24px; color: var(--ink);">{{ stats().lowStockCount }}</h2>
+          <p class="muted" style="margin: 2px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Low Stock Alerts</p>
+        </div>
+      </div>
+
+      <div class="console-panel" style="padding: 24px; display: flex; align-items: center; gap: 20px;">
+        <div style="width: 48px; height: 48px; border-radius: var(--r-md); background: var(--accent-dim); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px;">💰</div>
+        <div>
+          <h2 style="margin: 0; font-size: 22px; color: var(--ink);">₹{{ stats().totalValue | number:'1.0-0' }}</h2>
+          <p class="muted" style="margin: 2px 0 0 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Inventory Value</p>
+        </div>
+      </div>
+
     </div>
-  </section>
 
-  <div class="split-grid admin-product-layout">
-    <section class="card console-panel console-form-panel">
-      <div class="section-header admin-section-header">
+    <!-- Inventory Table Section -->
+    <section class="console-panel" style="padding: 0; overflow: hidden;">
+      
+      <div style="padding: 20px 28px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; background: var(--surface-alt);">
         <div>
-          <p class="eyebrow">Create product</p>
-          <h2>New onboarding entry</h2>
+          <h3 style="margin: 0; font-size: 18px;">Warehouse Assets</h3>
+          <p class="muted" style="margin: 2px 0 0 0; font-size: 12px;">Real-time inventory intelligence across all departments.</p>
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <input [(ngModel)]="query" (ngModelChange)="query.set($event)" placeholder="Search inventory..." 
+            style="background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-pill); padding: 8px 16px; width: 280px; color: var(--ink); outline: none; font-size: 13px;"/>
+          <button (click)="showAddAddress = !showAddAddress" class="search-cta" style="border-radius: var(--r-pill); padding: 8px 20px;">
+            {{ showAddAddress ? 'Cancel' : '+ Add Asset' }}
+          </button>
         </div>
       </div>
 
-      <form class="form-grid admin-form-grid" (ngSubmit)="onCreate()">
-        <label>Product name<input [(ngModel)]="form.name" name="name" required /></label>
-        <label>SKU<input [(ngModel)]="form.sku" name="sku" required /></label>
-        <label>Brand<input [(ngModel)]="form.brand" name="brand" /></label>
-        <label>Category<input [(ngModel)]="form.categoryName" name="categoryName" /></label>
-        <label class="full-span">
-          Description
-          <textarea [(ngModel)]="form.description" name="description" rows="4"></textarea>
-        </label>
-        <label>Primary image URL<input [(ngModel)]="form.primaryImageUrl" name="primaryImageUrl" /></label>
-        <label>Tags<input [(ngModel)]="form.tags" name="tags" /></label>
-        <label>SEO title<input [(ngModel)]="form.seoTitle" name="seoTitle" /></label>
-        <label>SEO description<input [(ngModel)]="form.seoDescription" name="seoDescription" /></label>
-        <label>
-          Selling price
-          <input [(ngModel)]="form.sellingPrice" name="sellingPrice" type="number" min="0" step="0.01" />
-        </label>
-        <label>
-          Opening stock
-          <input [(ngModel)]="form.stockQuantity" name="stockQuantity" type="number" min="0" />
-        </label>
+      <!-- Onboarding Form (Inline) -->
+      <div *ngIf="showAddAddress" style="padding: 24px 28px; background: var(--surface-2); border-bottom: 1px solid var(--line); animation: slideDown 0.3s ease;">
+        <form (ngSubmit)="onCreate()" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+          <input [(ngModel)]="form.name" name="name" placeholder="Product Name" required style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <input [(ngModel)]="form.sku" name="sku" placeholder="SKU Number" required style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <input [(ngModel)]="form.brand" name="brand" placeholder="Brand" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <input [(ngModel)]="form.categoryName" name="categoryName" placeholder="Category" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <input [(ngModel)]="form.sellingPrice" name="sellingPrice" type="number" placeholder="Price" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <input [(ngModel)]="form.stockQuantity" name="stockQuantity" type="number" placeholder="Quantity" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <button type="submit" [disabled]="saving" style="grid-column: span 2; background: var(--brand); color: #000; border-radius: 8px; border: none; font-weight: 700; cursor: pointer;">
+            {{ saving ? 'Registering...' : 'Complete Asset Registration' }}
+          </button>
+        </form>
+      </div>
 
-        @if (error) {
-          <p class="banner error full-span">{{ error }}</p>
-        }
+      <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+          <tr style="background: var(--surface-2); border-bottom: 1px solid var(--line-strong);">
+            <th style="padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;">Asset Details</th>
+            <th style="padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;">Serial / SKU</th>
+            <th style="padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;">Category</th>
+            <th style="padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: center;">Stock Qty</th>
+            <th style="padding: 14px 28px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: right;">Valuation</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of filteredProducts(); track product.id) {
+            <tr (click)="router.navigate(['/admin/products', product.id])" 
+              style="border-bottom: 1px solid var(--line); transition: all 0.2s; cursor: pointer;"
+              onmouseover="this.style.background='var(--line)'"
+              onmouseout="this.style.background='transparent'">
+              
+              <td style="padding: 16px 28px;">
+                <div style="display: grid; gap: 2px;">
+                  <span style="font-weight: 700; color: var(--ink); font-size: 14px;">{{ product.name }}</span>
+                  <span class="muted" style="font-size: 11px;">{{ product.brand }}</span>
+                </div>
+              </td>
+              
+              <td style="padding: 16px 28px;">
+                <span style="font-family: monospace; color: var(--brand); font-weight: 600; font-size: 12px;">{{ product.sku }}</span>
+              </td>
+              
+              <td style="padding: 16px 28px;">
+                <span style="background: var(--surface-3); color: var(--ink); padding: 4px 10px; border-radius: var(--r-pill); font-size: 11px; font-weight: 600; border: 1px solid var(--line);">
+                  {{ product.categoryName }}
+                </span>
+              </td>
+              
+              <td style="padding: 16px 28px; text-align: center;">
+                <span [style.color]="product.stockQuantity < 10 ? 'var(--danger)' : 'var(--success)'"
+                  style="font-size: 16px; font-weight: 800; font-family: 'Space Grotesk';">
+                  {{ product.stockQuantity }}
+                </span>
+              </td>
+              
+              <td style="padding: 16px 28px; text-align: right;">
+                <span style="font-weight: 700; color: var(--accent); font-size: 14px;">₹ {{ product.sellingPrice | number:'1.0-0' }}</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
 
-        <button class="full-span action-button action-button-neutral" type="submit" [disabled]="saving">
-          {{ saving ? 'Creating...' : 'Create as ' + (user()?.role || '') }}
-        </button>
-      </form>
-    </section>
-
-    <section class="card console-panel">
-      <div class="section-header admin-section-header">
-        <div>
-          <p class="eyebrow">Product list</p>
-          <h2>Existing catalog</h2>
+      @if (filteredProducts().length === 0) {
+        <div style="padding: 60px; text-align: center;">
+          <p class="muted" style="font-size: 14px;">No inventory records detected in current sector.</p>
         </div>
-        <input class="inline-search" [ngModel]="query()" (ngModelChange)="query.set($event)" placeholder="Search products" />
-      </div>
-
-      <div class="card-grid">
-        @for (product of filteredProducts(); track product.id) {
-          <app-product-card [product]="product"></app-product-card>
-        }
-      </div>
+      }
     </section>
+
   </div>
 </div>

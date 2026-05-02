@@ -77,3 +77,38 @@ export interface ApprovalQueueItem {
   requestedBy?: string;
   updatedAt?: string;
 }
+
+export interface UserAddress {
+  id?: string;
+  userId?: string;
+  fullName: string;
+  streetAddress: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  phoneNumber: string;
+  isDefault: boolean;
+}
+
+export interface OrderItem {
+  id?: string;
+  orderId?: string;
+  productId: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+}
+
+export interface Order {
+  id: string;
+  userId: string;
+  userEmail: string;
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+  totalAmount: number;
+  shippingAddress: UserAddress;
+  items: OrderItem[];
+}
+

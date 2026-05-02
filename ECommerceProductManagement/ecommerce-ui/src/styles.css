@@ -2870,3 +2870,63 @@ button[disabled] {
     padding: 22px 20px;
   }
 }
+/* ============================================================
+   ORDER STATUS BADGES
+   ============================================================ */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: var(--r-pill);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.status-badge-placed {
+  background: var(--info-dim);
+  color: var(--info);
+  border-color: rgba(96, 165, 250, 0.2);
+}
+
+.status-badge-dispatched {
+  background: var(--warn-dim);
+  color: var(--warn);
+  border-color: rgba(251, 191, 36, 0.2);
+}
+
+.status-badge-outfordelivery {
+  background: var(--brand-dim);
+  color: var(--brand);
+  border-color: rgba(0, 201, 167, 0.2);
+}
+
+.status-badge-delivered {
+  background: var(--success-dim);
+  color: var(--success);
+  border-color: rgba(52, 211, 153, 0.2);
+}
+
+.status-badge-cancelled {
+  background: var(--danger-dim);
+  color: var(--danger);
+  border-color: rgba(251, 113, 133, 0.2);
+}
+
+.status-select {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  outline: none;
+}
+
+.status-select:focus {
+  border-color: var(--brand);
+}
+
