@@ -98,7 +98,7 @@ public class ProductController : ControllerBase
         product.Name = dto.Name;
         product.SKU = dto.SKU;
         product.Brand = dto.Brand;
-        product.Description = dto.Description;
+        product.Description = dto.Description;\q\
         product.CategoryName = dto.CategoryName;
         product.SeoTitle = dto.SeoTitle;
         product.SeoDescription = dto.SeoDescription;
