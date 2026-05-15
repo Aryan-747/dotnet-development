@@ -11,6 +11,18 @@ public class ProductController : ControllerBase
 {
     private readonly IProductRepository _repo;
 
+
+    public static List<string> Category = new List<string>();
+    
+    public void addItem()
+    {
+        Category.Add("Clothing");
+        Category.Add("Electronics");
+        Category.Add("Furniture");
+        Category.Add("Sportswear");
+
+    }
+
     public ProductController(IProductRepository repo)
     {
         _repo = repo;
@@ -98,7 +110,7 @@ public class ProductController : ControllerBase
         product.Name = dto.Name;
         product.SKU = dto.SKU;
         product.Brand = dto.Brand;
-        product.Description = dto.Description;\q\
+        product.Description = dto.Description;
         product.CategoryName = dto.CategoryName;
         product.SeoTitle = dto.SeoTitle;
         product.SeoDescription = dto.SeoDescription;
