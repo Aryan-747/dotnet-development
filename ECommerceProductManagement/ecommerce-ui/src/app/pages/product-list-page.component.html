@@ -62,7 +62,12 @@
           <input [(ngModel)]="form.name" name="name" placeholder="Product Name" required style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
           <input [(ngModel)]="form.sku" name="sku" placeholder="SKU Number" required style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
           <input [(ngModel)]="form.brand" name="brand" placeholder="Brand" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
-          <input [(ngModel)]="form.categoryName" name="categoryName" placeholder="Category" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
+          <select [(ngModel)]="form.categoryName" name="categoryName" required style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line); appearance: auto;">
+            <option value="" disabled selected>Select Category</option>
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
           <input [(ngModel)]="form.sellingPrice" name="sellingPrice" type="number" placeholder="Price" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
           <input [(ngModel)]="form.stockQuantity" name="stockQuantity" type="number" placeholder="Quantity" style="background: var(--surface); color: var(--ink); padding: 10px; border-radius: 8px; border: 1px solid var(--line);"/>
           <button type="submit" [disabled]="saving" style="grid-column: span 2; background: var(--brand); color: #000; border-radius: 8px; border: none; font-weight: 700; cursor: pointer;">

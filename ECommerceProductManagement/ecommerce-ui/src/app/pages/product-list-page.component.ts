@@ -31,6 +31,7 @@ const emptyProduct = {
 })
 export class ProductListPageComponent {
   protected readonly products = signal<Product[]>([]);
+  protected readonly categories = ['Electronics', 'Fashion', 'Home & Kitchen', 'Fitness'];
   protected readonly query = signal('');
   protected form = { ...emptyProduct };
   protected error = '';
